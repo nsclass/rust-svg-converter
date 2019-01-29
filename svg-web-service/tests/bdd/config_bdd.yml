@@ -1,0 +1,5 @@
+services:
+  svg-web-service:
+    host: localhost
+    port: 8000
+    ssl: false

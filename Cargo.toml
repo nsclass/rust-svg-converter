@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+    "svg-web-service",
+    "svg-converter"
+]
