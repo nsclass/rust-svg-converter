@@ -17,12 +17,11 @@ use actix_web::middleware::Logger;
 
 use web_handler::*;
 
-
 fn create_app() -> App<()> {
     App::new()
         .middleware(Logger::default())
         .resource("/health", |r| r.f(health))
-        
+
         .resource("/svg/conversion", |r| {
             r.method(http::Method::PUT).with_config(svg_convert, |(cfg,)| {
                 cfg.limit(4096);
