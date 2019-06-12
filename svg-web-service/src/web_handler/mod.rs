@@ -1,5 +1,3 @@
 
-use actix_web::{HttpRequest, HttpResponse, Json, Responder };
-
-include!("health.rs");
-include!("svg_conversion.rs");
+pub mod health;
+pub mod svg_conversion;

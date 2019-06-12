@@ -1,3 +1,6 @@
+use actix_web::{
+    put, HttpRequest, HttpResponse, web::Json
+};
 
 #[derive(Serialize, Deserialize)]
 pub struct SvgConvertRequest {
@@ -20,8 +23,8 @@ impl SvgConvertResponse {
         }
     }
 }
-
-pub fn svg_convert(data: Json<SvgConvertRequest>) -> HttpResponse {
+#[put("/svg/conversion")]
+pub fn svg_convert(req: HttpRequest, data: Json<SvgConvertRequest>) -> HttpResponse {
 
     let res = svg_converter::svg_converted_str_from_base64_image(data.image_base64_data.clone());
 

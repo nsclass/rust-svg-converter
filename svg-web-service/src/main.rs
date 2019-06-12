@@ -7,30 +7,30 @@ extern crate futures;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
-#[macro_use]
-extern crate serde_json;
 
 mod web_handler;
 
-use actix_web::{http, server, App, HttpRequest, Path, Json, State, Responder};
-use actix_web::middleware::Logger;
+use actix_web::{
+    middleware, App, HttpServer,
+};
 
-use web_handler::*;
+use web_handler:: {
+    health, svg_conversion
+};
 
-fn create_app() -> App<()> {
-    App::new()
-        .middleware(Logger::default())
-        .resource("/health", |r| r.f(health))
+fn main() -> std::io::Result<()> {
+    std::env::set_var("RUST_LOG", "actix_server=info,actix_web=info");
+    env_logger::init();
 
-        .resource("/svg/conversion", |r| {
-            r.method(http::Method::PUT).with_config(svg_convert, |(cfg,)| {
-                cfg.limit(4096);
-            })
-        })
-}
-
-fn main() {
-    server::new(|| create_app())
-        .bind("127.0.0.1:8080").unwrap()
-        .run();
+HttpServer::new(|| {
+        App::new()
+            .wrap(middleware::DefaultHeaders::new().header("X-Version", "0.2"))
+            .wrap(middleware::Compress::default())
+            .wrap(middleware::Logger::default())
+            .service(health::health)
+            .service(svg_conversion::svg_convert)
+    })
+    .bind("127.0.0.1:8080")?
+    .workers(1)
+    .run()
 }
