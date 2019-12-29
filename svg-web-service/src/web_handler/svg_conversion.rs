@@ -1,6 +1,10 @@
 use actix_web::{
-    put, HttpRequest, HttpResponse, web::Json
+    error, web, put, HttpRequest, HttpResponse, web::Json, Error
 };
+use futures::future::{Future, ok};
+use bytes::{Bytes, BytesMut};
+use futures::StreamExt;
+
 
 #[derive(Serialize, Deserialize)]
 pub struct SvgConvertRequest {
@@ -23,14 +27,27 @@ impl SvgConvertResponse {
         }
     }
 }
-#[put("/svg/conversion")]
-pub async fn svg_convert(_req: HttpRequest, data: Json<SvgConvertRequest>) -> HttpResponse {
 
+#[put("/svg/conversion")]
+pub async fn svg_convert(_req: HttpRequest, mut payload: web::Payload) -> Result<HttpResponse, Error> {
+    // payload is a stream of Bytes objects
+    let mut body = BytesMut::new();
+    while let Some(chunk) = payload.next().await {
+        let chunk = chunk?;
+        // limit max size of in-memory payload
+        // if (body.len() + chunk.len()) > MAX_SIZE {
+        //     return Err(error::ErrorBadRequest("overflow"));
+        // }
+        body.extend_from_slice(&chunk);
+    }
+
+    // body is loaded, now we can deserialize serde-json
+    let data = serde_json::from_slice::<SvgConvertRequest>(&body)?;
     let res = svg_converter::svg_converted_str_from_base64_image(data.image_base64_data.clone());
 
     match res {
-        Ok(svg_string) => HttpResponse::Ok().json(SvgConvertResponse::new(&data.image_file_name, &svg_string)),
-        Err(err_msg) => HttpResponse::NotFound().json(format!("{}: {}", data.image_file_name, err_msg)),
+        Ok(svg_string) => Ok(HttpResponse::Ok().json(SvgConvertResponse::new(&data.image_file_name, &svg_string))),
+        Err(err_msg) => Ok(HttpResponse::NotFound().json(format!("{}: {}", data.image_file_name, err_msg))),
     }
 }
 
