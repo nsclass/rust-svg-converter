@@ -8,6 +8,6 @@ struct HealthStatus {
 }
 
 #[get("/health")]
-pub fn health(req: HttpRequest) -> HttpResponse {
+pub async fn health(_req: HttpRequest) -> HttpResponse {
     HttpResponse::Ok().json(HealthStatus { status: "UP".to_string()})
 }
