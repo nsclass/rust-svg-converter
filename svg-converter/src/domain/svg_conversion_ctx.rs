@@ -1,3 +1,6 @@
+use crate::domain::image_array::{ImageArray, QuantizationImageArray};
+use crate::domain::image_convert_options::ImageConvertOptions;
+use crate::domain::image_data::ImageData;
 
 pub enum SvgConversionCtx {
     Base64Image((String, ImageConvertOptions)),
@@ -24,7 +27,9 @@ impl SvgConversionCtx {
 
     pub fn into_palette_data(self) -> Option<(ImageData, ImageArray, ImageConvertOptions)> {
         match self {
-            SvgConversionCtx::Palette((ImageData, ImageArray, ImageConvertOptions)) => Some((ImageData, ImageArray, ImageConvertOptions)),
+            SvgConversionCtx::Palette((image_data, image_array, image_convert_options)) => {
+                Some((image_data, image_array, image_convert_options))
+            }
             _ => None,
         }
     }

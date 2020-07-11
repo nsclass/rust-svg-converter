@@ -1735,6 +1735,7 @@ dependencies = [
 name = "svg-converter"
 version = "0.1.0"
 dependencies = [
+ "failure 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "image 0.20.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "image-base64 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "ndarray 0.12.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1750,6 +1751,7 @@ dependencies = [
  "actix-web 2.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "bytes 0.5.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "env_logger 0.7.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "failure 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_derive 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
