@@ -9,7 +9,7 @@ svg-converter = { path = "../svg-converter" }
 
 actix = "0.9"
 actix-web = "2.0"
-actix-rt = "1.0.0"
+actix-rt = "1.1.1"
 
 futures = "0.3"
 env_logger = "0.7"
