@@ -1,25 +1,10 @@
-
-extern crate actix;
-extern crate actix_web;
-extern crate bytes;
-extern crate env_logger;
-extern crate futures;
-extern crate serde;
-#[macro_use]
-extern crate serde_derive;
-
 mod web_handler;
 
 use std::io;
 
-use actix_web::{
-    middleware, App, HttpServer,
-};
+use actix_web::{middleware, App, HttpServer};
 
-
-use web_handler:: {
-    health, svg_conversion
-};
+use crate::web_handler::{health, svg_conversion};
 
 #[actix_rt::main]
 async fn main() -> io::Result<()> {
