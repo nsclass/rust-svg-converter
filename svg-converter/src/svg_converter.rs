@@ -1,12 +1,12 @@
 use failure::Error;
 
-use crate::domain::image_convert_options::ImageConvertOptions;
-use crate::domain::image_data::ImageData;
-use crate::domain::svg_conversion_ctx::SvgConversionCtx;
-use crate::operation::color_quantization::color_quantization;
-use crate::operation::palette_generation::generate_palette;
-use crate::utils::operation_manager::OperationManager;
-use crate::utils::operation_progress_listener::OperationProgressListener;
+use crate::domain::ImageConvertOptions;
+use crate::domain::ImageData;
+use crate::domain::SvgConversionCtx;
+use crate::operation::color_quantization;
+use crate::operation::generate_palette;
+use crate::utils::OperationManager;
+use crate::utils::OperationProgressListener;
 
 struct ProgressListener {}
 

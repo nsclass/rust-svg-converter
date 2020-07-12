@@ -1,2 +1,5 @@
-pub mod operation_manager;
-pub mod operation_progress_listener;
+mod operation_manager;
+mod operation_progress_listener;
+
+pub use operation_manager::*;
+pub use operation_progress_listener::*;

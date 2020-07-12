@@ -2,7 +2,12 @@
 // include!("svg_conversion_ctx.rs");
 // include!("image_data.rs");
 // include!("image_array.rs");
-pub mod image_array;
-pub mod image_convert_options;
-pub mod image_data;
-pub mod svg_conversion_ctx;
+mod image_array;
+mod image_convert_options;
+mod image_data;
+mod svg_conversion_ctx;
+
+pub use image_array::*;
+pub use image_convert_options::*;
+pub use image_data::*;
+pub use svg_conversion_ctx::*;

@@ -1,5 +1,10 @@
 // include!("svg_converter.rs");
-pub mod domain;
-pub mod operation;
-pub mod svg_converter;
-pub mod utils;
+mod domain;
+mod operation;
+mod svg_converter;
+mod utils;
+
+pub use domain::*;
+pub use operation::*;
+pub use svg_converter::*;
+pub use utils::*;

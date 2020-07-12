@@ -1,5 +1,5 @@
-use crate::domain::image_array::QuantizationImageArray;
-use crate::domain::svg_conversion_ctx::SvgConversionCtx;
+use crate::domain::QuantizationImageArray;
+use crate::domain::SvgConversionCtx;
 use failure::Error;
 
 pub fn color_quantization(ctx: SvgConversionCtx) -> Result<SvgConversionCtx, Error> {

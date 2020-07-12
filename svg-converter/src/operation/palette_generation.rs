@@ -1,6 +1,6 @@
-use crate::domain::image_array::ImageArray;
-use crate::domain::image_data::ImageData;
-use crate::domain::svg_conversion_ctx::SvgConversionCtx;
+use crate::domain::ImageArray;
+use crate::domain::ImageData;
+use crate::domain::SvgConversionCtx;
 use failure::Error;
 
 use rand::Rng;

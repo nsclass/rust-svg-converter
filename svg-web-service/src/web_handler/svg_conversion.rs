@@ -3,7 +3,7 @@ use bytes::{Bytes, BytesMut};
 use futures::future::{ok, Future};
 use futures::StreamExt;
 use serde_derive::{Deserialize, Serialize};
-use svg_converter::svg_converter::svg_converted_str_from_base64_image;
+use svg_converter::svg_converted_str_from_base64_image;
 
 #[derive(Serialize, Deserialize)]
 pub struct SvgConvertRequest {
