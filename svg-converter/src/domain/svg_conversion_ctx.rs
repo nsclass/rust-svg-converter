@@ -1,6 +1,6 @@
-use crate::domain::image_array::{ImageArray, QuantizationImageArray};
-use crate::domain::image_convert_options::ImageConvertOptions;
-use crate::domain::image_data::ImageData;
+use crate::domain::ImageConvertOptions;
+use crate::domain::ImageData;
+use crate::domain::{ImageArray, QuantizationImageArray};
 
 pub enum SvgConversionCtx {
     Base64Image((String, ImageConvertOptions)),

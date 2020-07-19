@@ -1,4 +1,3 @@
-
 #[derive(Debug)]
 pub struct ImageData {
     pub width: usize,
@@ -7,8 +6,8 @@ pub struct ImageData {
 }
 
 impl ImageData {
-    pub fn new(width: usize, height: usize, data: Vec<u8>) -> ImageData {
-        ImageData {
+    pub fn new(width: usize, height: usize, data: Vec<u8>) -> Self {
+        Self {
             width: width,
             height: height,
             data: data,
