@@ -1,5 +1,5 @@
 use crate::domain::{ImageArray, ImageData, QuantizationImageArray, SvgConversionCtx};
-use failure::Error;
+use crate::Error;
 
 // double[][] GAUSSIAN_KERNEL_FOR_BLUR = {
 //     {0.27901,  0.44198,  0.27901 },
@@ -29,7 +29,7 @@ fn get_gaussian_kernel_for_blur(idx: usize) -> Result<&'static [f32], Error> {
     if idx < VALUE_HOLDERS.len() {
         Ok(VALUE_HOLDERS[idx])
     } else {
-        failure::bail!("out of index on finding gaussian")
+        Err(Error::GaussianIndexError)
     }
 }
 
@@ -192,7 +192,7 @@ pub fn color_quantization(ctx: SvgConversionCtx) -> Result<SvgConversionCtx, Err
             options,
         )))
     } else {
-        failure::bail!("failed to create a color quantization")
+        Err(Error::FailureColorQuantization)
     }
 }
 

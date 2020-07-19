@@ -1,4 +1,4 @@
-use failure::Error;
+use crate::Error;
 
 use crate::domain::ImageConvertOptions;
 use crate::domain::ImageData;
@@ -32,10 +32,10 @@ fn create_image_data(ctx: SvgConversionCtx) -> Result<(ImageData, ImageConvertOp
                     );
                     Result::Ok((image_data, options))
                 }
-                Err(image_error) => failure::bail!(image_error.to_string()),
+                Err(image_error) => Err(Error::ImageError(image_error)),
             }
         }
-        _ => failure::bail!("not valid base64 image string"),
+        _ => Err(Error::NotValidBase64),
     }
 }
 
@@ -74,7 +74,7 @@ pub fn svg_converted_str_from_base64_image(base64: String) -> Result<String, Err
         if let Some(svg_str) = ctx.into_svg_string() {
             Ok(svg_str)
         } else {
-            failure::bail!("Failed to convert an image")
+            Err(Error::ImageConvertFailure)
         }
     })
 }

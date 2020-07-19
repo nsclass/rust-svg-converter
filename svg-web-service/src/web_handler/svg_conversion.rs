@@ -45,7 +45,7 @@ pub async fn svg_convert(
 
     // body is loaded, now we can deserialize serde-json
     let data = serde_json::from_slice::<SvgConvertRequest>(&body)?;
-    let res: Result<String, failure::Error> =
+    let res: Result<String, svg_converter::Error> =
         svg_converted_str_from_base64_image(data.image_base64_data.clone());
 
     match res {

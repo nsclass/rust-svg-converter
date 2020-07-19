@@ -1,4 +1,4 @@
-use failure::Error;
+use crate::Error;
 
 use crate::utils::operation_progress_listener::OperationProgressListener;
 

@@ -1,7 +1,7 @@
 use crate::domain::ImageArray;
 use crate::domain::ImageData;
 use crate::domain::SvgConversionCtx;
-use failure::Error;
+use crate::Error;
 
 use rand::Rng;
 
@@ -15,7 +15,7 @@ pub fn generate_palette(ctx: SvgConversionCtx) -> Result<SvgConversionCtx, Error
 
         Ok(SvgConversionCtx::Palette((image_data, palette, options)))
     } else {
-        failure::bail!("Failed to generate a palette")
+        Err(Error::FailureGeneratePallette)
     }
 }
 
