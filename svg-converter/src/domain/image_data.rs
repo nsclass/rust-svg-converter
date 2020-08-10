@@ -1,8 +1,22 @@
+use std::ops::{Index, IndexMut};
 #[derive(Debug)]
 pub struct ImageData {
     pub width: usize,
     pub height: usize,
     pub data: Vec<u8>,
+}
+
+impl Index<usize> for ImageData {
+    type Output = [u8];
+    fn index(&self, index: usize) -> &Self::Output {
+        &self.data[index * self.width..(index + 1) * self.width]
+    }
+}
+
+impl IndexMut<usize> for ImageData {
+    fn index_mut(&mut self, index: usize) -> &mut Self::Output {
+        &mut self.data[index * self.width..(index + 1) * self.width]
+    }
 }
 
 impl ImageData {
@@ -21,21 +35,28 @@ impl ImageData {
     pub fn index_at(&self, idx: usize) -> u8 {
         self.data[idx]
     }
-
-    pub fn index_at_row_col(&self, row: usize, col: usize) -> u8 {
-        self.data[row * self.width + col]
-    }
 }
 
 mod tests {
     use super::*;
 
     #[test]
-    fn test_index_at() {
+    fn test_index_ops() {
         // 2 x 4 matrix
         let data = vec![1, 2, 3, 4, 5, 6, 7, 8];
         let image_data = ImageData::new(4, 2, data);
-        assert_eq!(image_data.index_at_row_col(0, 1), 2);
-        assert_eq!(image_data.index_at_row_col(1, 2), 7);
+        assert_eq!(image_data[0][1], 2);
+        assert_eq!(image_data[1][2], 7);
+    }
+
+    #[test]
+    fn test_index_mut_ops() {
+        // 2 x 4 matrix
+        let data = vec![1, 2, 3, 4, 5, 6, 7, 8];
+        let mut image_data = ImageData::new(4, 2, data);
+        image_data[0][1] = 30;
+        assert_eq!(image_data[0][1], 30);
+        image_data[1][2] = 100;
+        assert_eq!(image_data[1][2], 100);
     }
 }
