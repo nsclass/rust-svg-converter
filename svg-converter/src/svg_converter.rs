@@ -26,8 +26,8 @@ fn create_image_data(ctx: SvgConversionCtx) -> Result<(ImageData, ImageConvertOp
                 Ok(dynamic_image) => {
                     let rgba_image = dynamic_image.to_rgba();
                     let image_data = ImageData::new(
-                        rgba_image.width() as usize,
                         rgba_image.height() as usize,
+                        rgba_image.width() as usize,
                         rgba_image.into_raw(),
                     );
                     Result::Ok((image_data, options))
