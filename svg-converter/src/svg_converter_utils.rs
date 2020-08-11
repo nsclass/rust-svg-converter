@@ -3,8 +3,6 @@ use crate::Error;
 use crate::domain::ImageConvertOptions;
 use crate::domain::ImageData;
 use crate::domain::SvgConversionCtx;
-use crate::operation::color_quantization;
-use crate::operation::generate_palette;
 use crate::utils::OperationManager;
 use crate::utils::OperationProgressListener;
 
@@ -51,22 +49,17 @@ pub fn svg_converted_str_from_base64_image(base64: String) -> Result<String, Err
     operation_manager.add_operation(
         "create an image data",
         |ctx| -> Result<SvgConversionCtx, Error> {
-            create_image_data(ctx)
-                .map(|(image_data, options)| SvgConversionCtx::ImageData((image_data, options)))
+            create_image_data(ctx).map(|(image_data, options)| {
+                SvgConversionCtx::ImageData((image_data.into_color(), options))
+            })
         },
     );
 
-    // 2. generate palette
-    operation_manager.add_operation(
-        "generate a palette",
-        |ctx| -> Result<SvgConversionCtx, Error> { generate_palette(ctx) },
-    );
-
-    // 3. Color quantization
-    operation_manager.add_operation(
-        "color quantization",
-        |ctx| -> Result<SvgConversionCtx, Error> { color_quantization(ctx) },
-    );
+    // // 2. generate palette
+    // operation_manager.add_operation(
+    //     "generate a palette",
+    //     |ctx| -> Result<SvgConversionCtx, Error> { generate_palette(ctx) },
+    // );
 
     // execute all operations
     let res = operation_manager.execute(ctx);

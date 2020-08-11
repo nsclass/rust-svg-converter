@@ -1,7 +1,5 @@
 // include!("palette_generation.rs");
 // include!("color_quantization.rs");
-mod color_quantization;
-mod palette_generation;
+mod generate_palette_quantization;
 
-pub use color_quantization::*;
-pub use palette_generation::*;
+pub use generate_palette_quantization::*;
