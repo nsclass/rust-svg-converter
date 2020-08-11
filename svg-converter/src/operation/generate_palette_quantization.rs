@@ -11,8 +11,26 @@ pub fn generate_palette_quantization(ctx: SvgConversionCtx) -> Result<SvgConvers
                 &optimizer::KMeans,
                 &ditherer::FloydSteinberg::new(),
             );
+            // create an index image which has a boundary filled with 255
+            let height = image_data.height + 2;
+            let width = image_data.width + 2;
+            let mut indexed_image = ImageData::new(height, width, vec![0; height * width]);
+            for row in 0..height {
+                indexed_image[row][0] = 0xff;
+                indexed_image[row][width - 1] = 0xff;
+            }
+            for col in 0..width {
+                indexed_image[0][col] = 0xff;
+                indexed_image[height - 1][col] = 0xff;
+            }
 
-            let indexed_image = ImageData::new(image_data.height, image_data.width, indexed_data);
+            for row in 0..image_data.height {
+                for col in 0..image_data.width {
+                    let data = indexed_data[row * image_data.width + col];
+                    indexed_image[row + 1][col + 1] = data;
+                }
+            }
+
             return Ok(SvgConversionCtx::ColorQuantization((
                 palette,
                 indexed_image,
@@ -27,29 +45,36 @@ pub fn generate_palette_quantization(ctx: SvgConversionCtx) -> Result<SvgConvers
 
 #[cfg(test)]
 mod tests {
-    use exoquant::{convert_to_indexed, ditherer, optimizer, testdata};
+    use crate::{
+        generate_palette_quantization, ImageColorData, ImageConvertOptions, SvgConversionCtx,
+    };
+    use exoquant::{convert_to_indexed, ditherer, optimizer, testdata, Color};
+    use testdata::TestImage;
 
     #[test]
     fn image_quantization_creation() {
-        // let data = vec![1, 2, 3, 4, 5, 6, 7, 8];
-        // let image_data = ImageData::new(2, 4, data);
-        // let palette = vec![Color::new(0, 0, 0, 0)];
+        let image = ImageColorData {
+            pixels: (0..100)
+                .map(|i| {
+                    let x = i & 255;
+                    let y = i >> 8;
+                    Color::new(x as u8, y as u8, 0, 255)
+                })
+                .collect(),
+            height: 10,
+            width: 10,
+        };
 
-        // let image_quantization = ImageQuantization {
-        //     indexed_image: image_data,
-        //     palette,
-        // };
-        let image = testdata::test_image();
+        let ctx = SvgConversionCtx::ImageData((image, ImageConvertOptions::default()));
+        let res = generate_palette_quantization(ctx);
+        match res {
+            Ok(SvgConversionCtx::ColorQuantization((palette, image, options))) => {
+                assert_eq!(palette.len(), 16);
+                assert_eq!(image.len(), 144);
+                assert_eq!(image[0][0], 0xff);
+            }
 
-        let (palette, indexed_data) = convert_to_indexed(
-            &image.pixels,
-            image.width,
-            256,
-            &optimizer::KMeans,
-            &ditherer::FloydSteinberg::new(),
-        );
-        assert_eq!(image.pixels.len(), 65536);
-        assert_eq!(palette.len(), 256);
-        assert_eq!(indexed_data.len(), 65536);
+            _ => todo!(),
+        }
     }
 }

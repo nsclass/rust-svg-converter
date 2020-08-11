@@ -22,7 +22,7 @@ impl IndexMut<usize> for ImageData {
 
 impl ImageData {
     pub fn new(height: usize, width: usize, data: Vec<u8>) -> Self {
-        assert!(data.len() / 4 == 0);
+        assert!(data.len() % 4 == 0);
         Self {
             height,
             width,

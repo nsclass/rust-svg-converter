@@ -4,7 +4,7 @@ use crate::domain::ImageConvertOptions;
 use crate::domain::ImageData;
 use crate::domain::SvgConversionCtx;
 use crate::utils::OperationManager;
-use crate::utils::OperationProgressListener;
+use crate::{generate_palette_quantization, utils::OperationProgressListener};
 
 struct ProgressListener {}
 
@@ -55,11 +55,11 @@ pub fn svg_converted_str_from_base64_image(base64: String) -> Result<String, Err
         },
     );
 
-    // // 2. generate palette
-    // operation_manager.add_operation(
-    //     "generate a palette",
-    //     |ctx| -> Result<SvgConversionCtx, Error> { generate_palette(ctx) },
-    // );
+    // 2. generate palette
+    operation_manager.add_operation(
+        "generate palette and color quantization",
+        |ctx| -> Result<SvgConversionCtx, Error> { generate_palette_quantization(ctx) },
+    );
 
     // execute all operations
     let res = operation_manager.execute(ctx);
