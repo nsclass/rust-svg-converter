@@ -23,6 +23,9 @@ pub enum Error {
     #[error("failed to generate scan paths")]
     ScanPathGenerationFailure,
 
+    #[error("failed to generate batch interpolation list")]
+    BatchInterpolationGenerationFailure,
+
     #[error("unknown error")]
     Unknown,
 }

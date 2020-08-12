@@ -1,6 +1,6 @@
 use crate::domain::ImageConvertOptions;
 use crate::domain::ImageData;
-use crate::{ImageColorData, ScanPathList};
+use crate::{ImageColorData, InterpolationBatchList, ScanPathList};
 use exoquant::Color;
 
 pub enum SvgConversionCtx {
@@ -9,6 +9,7 @@ pub enum SvgConversionCtx {
     ColorQuantization((Vec<Color>, ImageData, ImageConvertOptions)),
     Layers((Vec<Vec<Vec<i32>>>, ImageConvertOptions)),
     ScanPaths((ScanPathList, ImageConvertOptions)),
+    BatchInterpolation((InterpolationBatchList, ImageConvertOptions)),
     SvgString(String),
 }
 
@@ -50,6 +51,14 @@ impl SvgConversionCtx {
         }
     }
 
+    pub fn into_batch_interpolation(self) -> Option<(InterpolationBatchList, ImageConvertOptions)> {
+        match self {
+            SvgConversionCtx::BatchInterpolation((batch_list, options)) => {
+                Some((batch_list, options))
+            }
+            _ => None,
+        }
+    }
     pub fn into_svg_string(self) -> Option<String> {
         match self {
             SvgConversionCtx::SvgString(svg_string) => Some(svg_string),

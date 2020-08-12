@@ -49,8 +49,7 @@ mod tests {
     use crate::{
         generate_palette_quantization, ImageColorData, ImageConvertOptions, SvgConversionCtx,
     };
-    use exoquant::{convert_to_indexed, ditherer, optimizer, testdata, Color};
-    use testdata::TestImage;
+    use exoquant::Color;
 
     #[test]
     fn image_quantization_creation() {

@@ -6,6 +6,7 @@ mod error;
 mod image_array;
 mod image_convert_options;
 mod image_data;
+mod image_interpolation;
 mod image_paths;
 mod svg_conversion_ctx;
 
@@ -13,5 +14,6 @@ pub use error::*;
 pub use image_array::*;
 pub use image_convert_options::*;
 pub use image_data::*;
+pub use image_interpolation::*;
 pub use image_paths::*;
 pub use svg_conversion_ctx::*;

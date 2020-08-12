@@ -130,6 +130,14 @@ impl Path {
     pub fn add_path(&mut self, point: PathPoint) {
         self.paths.push(point)
     }
+
+    pub fn len(&self) -> usize {
+        self.paths.len()
+    }
+
+    pub fn index_at(&self, idx: usize) -> &PathPoint {
+        &self.paths[idx]
+    }
 }
 
 #[derive(Debug, Default, Clone)]
@@ -191,6 +199,14 @@ impl ScanPaths {
         }
         ScanPaths { paths }
     }
+
+    pub fn index_at(&self, idx: usize) -> &Path {
+        &self.paths[idx]
+    }
+
+    pub fn len(&self) -> usize {
+        self.paths.len()
+    }
 }
 
 #[derive(Debug, Default, Clone)]
@@ -201,5 +217,11 @@ pub struct ScanPathList {
 impl ScanPathList {
     pub fn new(scan_paths: Vec<ScanPaths>) -> Self {
         Self { scan_paths }
+    }
+    pub fn index_at(&self, idx: usize) -> &ScanPaths {
+        &self.scan_paths[idx]
+    }
+    pub fn len(&self) -> usize {
+        self.scan_paths.len()
     }
 }
