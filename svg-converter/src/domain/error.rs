@@ -20,6 +20,9 @@ pub enum Error {
     #[error("failed to generate layers")]
     LayerGenerationFailure,
 
+    #[error("failed to generate scan paths")]
+    ScanPathGenerationFailure,
+
     #[error("unknown error")]
     Unknown,
 }

@@ -4,7 +4,9 @@ use crate::domain::ImageConvertOptions;
 use crate::domain::ImageData;
 use crate::domain::SvgConversionCtx;
 use crate::utils::OperationManager;
-use crate::{generate_palette_quantization, utils::OperationProgressListener};
+use crate::{
+    generate_layer_edge_detection, generate_palette_quantization, utils::OperationProgressListener,
+};
 
 struct ProgressListener {}
 
@@ -64,8 +66,13 @@ pub fn svg_converted_str_from_base64_image(base64: String) -> Result<String, Err
     // 3. generate layers and edge detection
     operation_manager.add_operation(
         "generate layers and edge detection",
-        |ctx| -> Result<SvgConversionCtx, Error> { generate_palette_quantization(ctx) },
+        |ctx| -> Result<SvgConversionCtx, Error> { generate_layer_edge_detection(ctx) },
     );
+
+    // 4. scan paths
+    operation_manager.add_operation("scan paths", |ctx| -> Result<SvgConversionCtx, Error> {
+        generate_layer_edge_detection(ctx)
+    });
 
     // execute all operations
     let res = operation_manager.execute(ctx);

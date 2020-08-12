@@ -1,6 +1,6 @@
 use crate::domain::ImageConvertOptions;
 use crate::domain::ImageData;
-use crate::ImageColorData;
+use crate::{ImageColorData, ScanPathList};
 use exoquant::Color;
 
 pub enum SvgConversionCtx {
@@ -8,7 +8,7 @@ pub enum SvgConversionCtx {
     ImageData((ImageColorData, ImageConvertOptions)),
     ColorQuantization((Vec<Color>, ImageData, ImageConvertOptions)),
     Layers((Vec<Vec<Vec<i32>>>, ImageConvertOptions)),
-
+    ScanPaths((ScanPathList, ImageConvertOptions)),
     SvgString(String),
 }
 
@@ -39,6 +39,13 @@ impl SvgConversionCtx {
     pub fn into_layers(self) -> Option<(Vec<Vec<Vec<i32>>>, ImageConvertOptions)> {
         match self {
             SvgConversionCtx::Layers((layers, options)) => Some((layers, options)),
+            _ => None,
+        }
+    }
+
+    pub fn into_scan_paths(self) -> Option<(ScanPathList, ImageConvertOptions)> {
+        match self {
+            SvgConversionCtx::ScanPaths((scan_paths, options)) => Some((scan_paths, options)),
             _ => None,
         }
     }
