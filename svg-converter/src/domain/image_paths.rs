@@ -96,19 +96,24 @@ static PATH_SCAN_COMBINED_LOOKUP: &'static [[[i8; 4]; 4]; 16] = &[
 
 #[derive(Debug, Default, Clone)]
 pub struct PathPoint {
-    points: Vec<i32>,
+    row: i32,
+    col: i32,
+    image_index: i32,
 }
 
 impl PathPoint {
     pub fn new(row: i32, col: i32, index: i32) -> Self {
-        let point = vec![row, col, index];
-        Self { points: point }
+        Self {
+            row,
+            col,
+            image_index: index,
+        }
     }
     pub fn row(&self) -> usize {
-        self.points[0] as usize
+        self.row as usize
     }
     pub fn col(&self) -> usize {
-        self.points[1] as usize
+        self.col as usize
     }
 }
 
@@ -146,7 +151,7 @@ impl ScanPaths {
                     let mut px = col;
                     let mut py = row;
 
-                    let mut this_paths = Vec::<PathPoint>::new();
+                    let mut current_paths = Vec::<PathPoint>::new();
 
                     // fill paths will be drawn, but hole paths are also required to remove unnecessary edge nodes
                     let mut dir = PATH_SCAN_DIR_LOOKUP[layer[py][px] as usize];
@@ -155,10 +160,10 @@ impl ScanPaths {
                     // Path points loop
                     loop {
                         // New path point
-                        let this_point =
+                        let current_point =
                             PathPoint::new((px - 1) as i32, (py - 1) as i32, layer[py][px]);
 
-                        this_paths.push(this_point);
+                        current_paths.push(current_point);
 
                         // Next: look up the replacement, direction and coordinate changes = clear this cell, turn if required, walk forward
                         let lookup_row =
@@ -169,10 +174,14 @@ impl ScanPaths {
                         py += lookup_row[3] as usize;
 
                         // Close path
-                        if ((px - 1) == this_paths[0].row()) && ((py - 1) == this_paths[0].col()) {
+                        if ((px - 1) == current_paths[0].row())
+                            && ((py - 1) == current_paths[0].col())
+                        {
                             // Discarding 'hole' type paths and paths shorter than pathOmit
-                            if (!hole_path) && (this_paths.len() >= path_omit as usize) {
-                                paths[current_idx] = Path { paths: this_paths };
+                            if (!hole_path) && (current_paths.len() >= path_omit as usize) {
+                                paths[current_idx] = Path {
+                                    paths: current_paths,
+                                };
                             }
                             break;
                         }
