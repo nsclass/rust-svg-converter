@@ -13,11 +13,12 @@ pub enum Error {
 
     #[error("failed to create a color quantization")]
     FailureColorQuantization,
+
     #[error("maximum supported number of quantization color is 256")]
     NotSupportedNumberOfColorForQuantization,
 
-    #[error("failed to generate a palette")]
-    FailureGeneratePallette,
+    #[error("failed to generate layers")]
+    LayerGenerationFailure,
 
     #[error("unknown error")]
     Unknown,

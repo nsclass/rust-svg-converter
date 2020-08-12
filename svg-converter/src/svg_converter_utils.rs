@@ -55,9 +55,15 @@ pub fn svg_converted_str_from_base64_image(base64: String) -> Result<String, Err
         },
     );
 
-    // 2. generate palette
+    // 2. generate palette and color quantization
     operation_manager.add_operation(
         "generate palette and color quantization",
+        |ctx| -> Result<SvgConversionCtx, Error> { generate_palette_quantization(ctx) },
+    );
+
+    // 3. generate layers and edge detection
+    operation_manager.add_operation(
+        "generate layers and edge detection",
         |ctx| -> Result<SvgConversionCtx, Error> { generate_palette_quantization(ctx) },
     );
 

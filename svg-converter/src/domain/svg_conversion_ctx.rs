@@ -7,6 +7,7 @@ pub enum SvgConversionCtx {
     Base64Image((String, ImageConvertOptions)),
     ImageData((ImageColorData, ImageConvertOptions)),
     ColorQuantization((Vec<Color>, ImageData, ImageConvertOptions)),
+    Layers((Vec<Vec<Vec<i32>>>, ImageConvertOptions)),
 
     SvgString(String),
 }
@@ -22,6 +23,22 @@ impl SvgConversionCtx {
     pub fn into_image_data(self) -> Option<(ImageColorData, ImageConvertOptions)> {
         match self {
             SvgConversionCtx::ImageData((image_data, options)) => Some((image_data, options)),
+            _ => None,
+        }
+    }
+
+    pub fn into_quantization_data(self) -> Option<(Vec<Color>, ImageData, ImageConvertOptions)> {
+        match self {
+            SvgConversionCtx::ColorQuantization((palette, indexed_image, options)) => {
+                Some((palette, indexed_image, options))
+            }
+            _ => None,
+        }
+    }
+
+    pub fn into_layers(self) -> Option<(Vec<Vec<Vec<i32>>>, ImageConvertOptions)> {
+        match self {
+            SvgConversionCtx::Layers((layers, options)) => Some((layers, options)),
             _ => None,
         }
     }

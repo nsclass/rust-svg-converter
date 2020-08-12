@@ -12,6 +12,7 @@ pub fn generate_palette_quantization(ctx: SvgConversionCtx) -> Result<SvgConvers
                 &ditherer::FloydSteinberg::new(),
             );
             // create an index image which has a boundary filled with 255
+            // TODO: should find a better way instead of copying each cell.
             let height = image_data.height + 2;
             let width = image_data.width + 2;
             let mut indexed_image = ImageData::new(height, width, vec![0; height * width]);
@@ -71,7 +72,14 @@ mod tests {
             Ok(SvgConversionCtx::ColorQuantization((palette, image, options))) => {
                 assert_eq!(palette.len(), 16);
                 assert_eq!(image.len(), 144);
-                assert_eq!(image[0][0], 0xff);
+                for row in 0..image.height {
+                    assert_eq!(image[row][0], 0xff);
+                    assert_eq!(image[row][image.width - 1], 0xff);
+                }
+                for col in 0..image.width {
+                    assert_eq!(image[0][col], 0xff);
+                    assert_eq!(image[image.height - 1][col], 0xff);
+                }
             }
 
             _ => todo!(),
