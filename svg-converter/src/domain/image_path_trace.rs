@@ -11,7 +11,7 @@ impl ImagePathTrace {
         let mut sequence_type1: f64 = 0.;
         let mut sequence_type2: f64 = 0.;
 
-        let mut smp = Vec::<Vec<f64>>::new();
+        let mut trace_paths = Vec::<Vec<f64>>::new();
         //Double [] thissegment;
         let path_length = path.len();
 
@@ -39,7 +39,7 @@ impl ImagePathTrace {
             // 5.2. - 5.6. Split sequence and recursively apply 5.2. - 5.6. to startPoint-splitPoint and splitPoint-endPoint sequences
             let mut path_sequence =
                 fit_sequence(path, l_threshold, q_threshold, path_index, sequence_end);
-            smp.append(&mut path_sequence);
+            trace_paths.append(&mut path_sequence);
             // 5.7. TODO? If splitPoint-endPoint is a spline, try to add new points from the next sequence
 
             // forward pathIndex;
@@ -49,7 +49,7 @@ impl ImagePathTrace {
                 path_index = path_length;
             }
         }
-        Self { trace_paths: smp }
+        Self { trace_paths }
     }
 }
 
