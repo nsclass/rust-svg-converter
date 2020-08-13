@@ -1,15 +1,37 @@
 use crate::domain::ImageConvertOptions;
 use crate::domain::ImageData;
-use crate::{ImageColorData, InterpolationBatchList, ScanPathList};
+use crate::{ImageColorData, ImagePathTraceLayers, InterpolationBatchList, ScanPathList};
 use exoquant::Color;
 
 pub enum SvgConversionCtx {
     Base64Image((String, ImageConvertOptions)),
     ImageData((ImageColorData, ImageConvertOptions)),
     ColorQuantization((Vec<Color>, ImageData, ImageConvertOptions)),
-    Layers((Vec<Vec<Vec<i32>>>, ImageConvertOptions)),
-    ScanPaths((ScanPathList, ImageConvertOptions)),
-    BatchInterpolation((InterpolationBatchList, ImageConvertOptions)),
+    Layers(
+        (
+            Vec<Color>,
+            ImageData,
+            Vec<Vec<Vec<i32>>>,
+            ImageConvertOptions,
+        ),
+    ),
+    ScanPaths((Vec<Color>, ImageData, ScanPathList, ImageConvertOptions)),
+    BatchInterpolation(
+        (
+            Vec<Color>,
+            ImageData,
+            InterpolationBatchList,
+            ImageConvertOptions,
+        ),
+    ),
+    ImagePathTraceLayers(
+        (
+            Vec<Color>,
+            ImageData,
+            ImagePathTraceLayers,
+            ImageConvertOptions,
+        ),
+    ),
     SvgString(String),
 }
 
@@ -37,28 +59,65 @@ impl SvgConversionCtx {
         }
     }
 
-    pub fn into_layers(self) -> Option<(Vec<Vec<Vec<i32>>>, ImageConvertOptions)> {
+    pub fn into_layers(
+        self,
+    ) -> Option<(
+        Vec<Color>,
+        ImageData,
+        Vec<Vec<Vec<i32>>>,
+        ImageConvertOptions,
+    )> {
         match self {
-            SvgConversionCtx::Layers((layers, options)) => Some((layers, options)),
-            _ => None,
-        }
-    }
-
-    pub fn into_scan_paths(self) -> Option<(ScanPathList, ImageConvertOptions)> {
-        match self {
-            SvgConversionCtx::ScanPaths((scan_paths, options)) => Some((scan_paths, options)),
-            _ => None,
-        }
-    }
-
-    pub fn into_batch_interpolation(self) -> Option<(InterpolationBatchList, ImageConvertOptions)> {
-        match self {
-            SvgConversionCtx::BatchInterpolation((batch_list, options)) => {
-                Some((batch_list, options))
+            SvgConversionCtx::Layers((palette, indexed_image, layers, options)) => {
+                Some((palette, indexed_image, layers, options))
             }
             _ => None,
         }
     }
+
+    pub fn into_scan_paths(
+        self,
+    ) -> Option<(Vec<Color>, ImageData, ScanPathList, ImageConvertOptions)> {
+        match self {
+            SvgConversionCtx::ScanPaths((palette, indexed_image, scan_paths, options)) => {
+                Some((palette, indexed_image, scan_paths, options))
+            }
+            _ => None,
+        }
+    }
+
+    pub fn into_batch_interpolation(
+        self,
+    ) -> Option<(
+        Vec<Color>,
+        ImageData,
+        InterpolationBatchList,
+        ImageConvertOptions,
+    )> {
+        match self {
+            SvgConversionCtx::BatchInterpolation((palette, indexed_image, batch_list, options)) => {
+                Some((palette, indexed_image, batch_list, options))
+            }
+            _ => None,
+        }
+    }
+
+    pub fn into_image_path_trace(
+        self,
+    ) -> Option<(
+        Vec<Color>,
+        ImageData,
+        ImagePathTraceLayers,
+        ImageConvertOptions,
+    )> {
+        match self {
+            SvgConversionCtx::ImagePathTraceLayers((palette, indexed_image, layers, options)) => {
+                Some((palette, indexed_image, layers, options))
+            }
+            _ => None,
+        }
+    }
+
     pub fn into_svg_string(self) -> Option<String> {
         match self {
             SvgConversionCtx::SvgString(svg_string) => Some(svg_string),

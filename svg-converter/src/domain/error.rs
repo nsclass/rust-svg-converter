@@ -26,6 +26,9 @@ pub enum Error {
     #[error("failed to generate batch interpolation list")]
     BatchInterpolationGenerationFailure,
 
+    #[error("failed image path tracing")]
+    ImagePathTracingFailure,
+
     #[error("unknown error")]
     Unknown,
 }

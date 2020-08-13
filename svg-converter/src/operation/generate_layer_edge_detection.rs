@@ -72,7 +72,12 @@ pub fn generate_layer_edge_detection(ctx: SvgConversionCtx) -> Result<SvgConvers
             }
         }
 
-        return Ok(SvgConversionCtx::Layers((layers, options)));
+        return Ok(SvgConversionCtx::Layers((
+            palette,
+            indexed_image,
+            layers,
+            options,
+        )));
     }
 
     Err(Error::LayerGenerationFailure)

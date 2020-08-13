@@ -14,7 +14,7 @@ fn create_interpolation_node_list(scan_path: &ScanPaths) -> BatchInterpolation {
 }
 
 pub fn generate_batch_interpolation_list(ctx: SvgConversionCtx) -> Result<SvgConversionCtx, Error> {
-    if let Some((mut scan_paths, options)) = ctx.into_scan_paths() {
+    if let Some((palette, indexed_image, scan_paths, options)) = ctx.into_scan_paths() {
         let mut batch_list = Vec::<BatchInterpolation>::new();
         for idx in 0..scan_paths.len() {
             let scan_path = scan_paths.index_at(idx);
@@ -24,8 +24,13 @@ pub fn generate_batch_interpolation_list(ctx: SvgConversionCtx) -> Result<SvgCon
             batch_list.push(batch);
         }
 
-        let res = InterpolationBatchList::new(batch_list);
-        return Ok(SvgConversionCtx::BatchInterpolation((res, options)));
+        let inter_batch_list = InterpolationBatchList::new(batch_list);
+        return Ok(SvgConversionCtx::BatchInterpolation((
+            palette,
+            indexed_image,
+            inter_batch_list,
+            options,
+        )));
     }
     Err(Error::BatchInterpolationGenerationFailure)
 }

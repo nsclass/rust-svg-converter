@@ -9,6 +9,10 @@ impl InterpolationNode {
     pub fn new(points: [f64; 3]) -> Self {
         Self { points: points }
     }
+
+    pub fn point_at(&self, idx: usize) -> f64 {
+        self.points[idx]
+    }
 }
 
 #[derive(Debug, Default, Clone)]
@@ -84,6 +88,17 @@ impl InterpolationNodeList {
 
         Self { inter_nodes: nodes }
     }
+    pub fn len(&self) -> usize {
+        self.inter_nodes.len()
+    }
+
+    pub fn index_at(&self, idx: usize) -> &InterpolationNode {
+        &self.inter_nodes[idx]
+    }
+
+    pub fn point_at_seq_idx(&self, seq_idx: usize, value_idx: usize) -> f64 {
+        self.inter_nodes[seq_idx].point_at(value_idx)
+    }
 }
 
 #[derive(Debug, Default, Clone)]
@@ -95,6 +110,14 @@ impl BatchInterpolation {
     pub fn new(batch_inter_nodes: Vec<InterpolationNodeList>) -> Self {
         Self { batch_inter_nodes }
     }
+
+    pub fn len(&self) -> usize {
+        self.batch_inter_nodes.len()
+    }
+
+    pub fn index_at(&self, idx: usize) -> &InterpolationNodeList {
+        &self.batch_inter_nodes[idx]
+    }
 }
 
 #[derive(Debug, Default, Clone)]
@@ -105,5 +128,13 @@ pub struct InterpolationBatchList {
 impl InterpolationBatchList {
     pub fn new(batch_list: Vec<BatchInterpolation>) -> Self {
         Self { batch_list }
+    }
+
+    pub fn len(&self) -> usize {
+        self.batch_list.len()
+    }
+
+    pub fn index_at(&self, idx: usize) -> &BatchInterpolation {
+        &self.batch_list[idx]
     }
 }

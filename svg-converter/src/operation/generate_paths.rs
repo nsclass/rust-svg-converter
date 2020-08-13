@@ -1,7 +1,7 @@
 use crate::{Error, ScanPathList, ScanPaths, SvgConversionCtx};
 
 pub fn generate_scan_paths(ctx: SvgConversionCtx) -> Result<SvgConversionCtx, Error> {
-    if let Some((mut layers, options)) = ctx.into_layers() {
+    if let Some((palette, indexed_image, mut layers, options)) = ctx.into_layers() {
         let mut scan_paths = Vec::<ScanPaths>::new();
         for idx in 0..layers.len() {
             let layer = &mut layers[idx];
@@ -11,7 +11,12 @@ pub fn generate_scan_paths(ctx: SvgConversionCtx) -> Result<SvgConversionCtx, Er
             scan_paths.push(scan_path)
         }
         let scan_list = ScanPathList::new(scan_paths);
-        return Ok(SvgConversionCtx::ScanPaths((scan_list, options)));
+        return Ok(SvgConversionCtx::ScanPaths((
+            palette,
+            indexed_image,
+            scan_list,
+            options,
+        )));
     }
 
     Err(Error::ScanPathGenerationFailure)

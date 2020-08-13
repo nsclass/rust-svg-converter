@@ -5,8 +5,9 @@ use crate::domain::ImageData;
 use crate::domain::SvgConversionCtx;
 use crate::utils::OperationManager;
 use crate::{
-    generate_layer_edge_detection, generate_palette_quantization, generate_scan_paths,
-    utils::OperationProgressListener, generate_batch_interpolation_list,
+    generate_batch_interpolation_list, generate_layer_edge_detection,
+    generate_palette_quantization, generate_scan_paths, image_path_tracing,
+    utils::OperationProgressListener,
 };
 
 struct ProgressListener {}
@@ -80,6 +81,13 @@ pub fn svg_converted_str_from_base64_image(base64: String) -> Result<String, Err
         "batch interpolation",
         |ctx| -> Result<SvgConversionCtx, Error> { generate_batch_interpolation_list(ctx) },
     );
+
+    // 6. image path tracing
+    operation_manager.add_operation(
+        "image path tracing",
+        |ctx| -> Result<SvgConversionCtx, Error> { image_path_tracing(ctx) },
+    );
+
     // execute all operations
     let res = operation_manager.execute(ctx);
     res.and_then(|ctx| {
