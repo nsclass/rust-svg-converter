@@ -51,6 +51,18 @@ impl ImagePathTrace {
         }
         Self { trace_paths }
     }
+
+    pub fn value_at(&self, idx1: usize, idx2: usize) -> f64 {
+        self.trace_paths[idx1][idx2]
+    }
+
+    pub fn index_at(&self, idx: usize) -> &Vec<f64> {
+        &self.trace_paths[idx]
+    }
+
+    pub fn len(&self) -> usize {
+        self.trace_paths.len()
+    }
 }
 
 fn fit_sequence(
@@ -208,6 +220,14 @@ impl ImagePathTraceList {
         }
         Self { trace_paths }
     }
+
+    pub fn len(&self) -> usize {
+        self.trace_paths.len()
+    }
+
+    pub fn index_at(&self, idx: usize) -> &ImagePathTrace {
+        &self.trace_paths[idx]
+    }
 }
 
 pub struct ImagePathTraceLayers {
@@ -219,5 +239,19 @@ impl ImagePathTraceLayers {
         Self {
             trace_path_layers: layers,
         }
+    }
+
+    pub fn len(&self) -> usize {
+        self.trace_path_layers.len()
+    }
+
+    pub fn index_at(&self, idx: usize) -> &ImagePathTraceList {
+        &self.trace_path_layers[idx]
+    }
+
+    pub fn value_at(&self, idx1: usize, idx2: usize, idx3: usize, idx4: usize) -> f64 {
+        self.trace_path_layers[idx1]
+            .index_at(idx2)
+            .value_at(idx3, idx4)
     }
 }

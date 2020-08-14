@@ -6,7 +6,7 @@ use crate::domain::SvgConversionCtx;
 use crate::utils::OperationManager;
 use crate::{
     generate_batch_interpolation_list, generate_layer_edge_detection,
-    generate_palette_quantization, generate_scan_paths, image_path_tracing,
+    generate_palette_quantization, generate_scan_paths, generate_svg_string, image_path_tracing,
     utils::OperationProgressListener,
 };
 
@@ -86,6 +86,12 @@ pub fn svg_converted_str_from_base64_image(base64: String) -> Result<String, Err
     operation_manager.add_operation(
         "image path tracing",
         |ctx| -> Result<SvgConversionCtx, Error> { image_path_tracing(ctx) },
+    );
+
+    // 7. generate svg string
+    operation_manager.add_operation(
+        "generate svg string",
+        |ctx| -> Result<SvgConversionCtx, Error> { generate_svg_string(ctx) },
     );
 
     // execute all operations

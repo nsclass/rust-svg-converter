@@ -29,6 +29,9 @@ pub enum Error {
     #[error("failed image path tracing")]
     ImagePathTracingFailure,
 
+    #[error("failed to generate svg string")]
+    FailureGeneratingSvgString,
+
     #[error("unknown error")]
     Unknown,
 }
