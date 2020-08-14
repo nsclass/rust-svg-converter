@@ -1,6 +1,6 @@
-use serde_derive::{Deserialize, Serialize};
-
 use actix_web::{get, HttpRequest, HttpResponse};
+use serde::Deserialize;
+use serde::Serialize;
 
 #[derive(Serialize, Deserialize)]
 struct HealthStatus {

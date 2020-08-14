@@ -1,25 +1,21 @@
+mod config;
 mod web_handler;
 
-use std::io;
-
-use actix_web::{middleware, App, HttpServer};
-
-use crate::web_handler::{health, svg_convert};
+use crate::config::Config;
+use actix_web::{middleware::Logger, App, HttpServer};
+use color_eyre::Result;
+use tracing::info;
+use web_handler::app_config;
 
 #[actix_rt::main]
-async fn main() -> io::Result<()> {
-    std::env::set_var("RUST_LOG", "actix_web=debug,actix_server=info");
-    env_logger::init();
+async fn main() -> Result<()> {
+    let conf = Config::from_env().expect("server configuration");
+    info!("starting server at http://{}:{}", conf.host, conf.port);
 
-    HttpServer::new(|| {
-        App::new()
-            .wrap(middleware::Compress::default())
-            .wrap(middleware::Logger::default())
-            .service(health)
-            .service(svg_convert)
-    })
-    .bind("127.0.0.1:8080")?
-    .workers(4)
-    .run()
-    .await
+    HttpServer::new(move || App::new().wrap(Logger::default()).configure(app_config))
+        .bind(format!("{}:{}", conf.host, conf.port))?
+        .run()
+        .await?;
+
+    Ok(())
 }
