@@ -33,7 +33,7 @@ pub fn generate_svg_string(ctx: SvgConversionCtx) -> Result<SvgConversionCtx, Er
                 // Label (Z-index key) is the startPoint of the path, linearized
                 let label = (trace_layers.value_at(layer_idx, path_count, 0, 2) * w as f64)
                     + trace_layers.value_at(layer_idx, path_count, 0, 1);
-                let key = label.to_string();
+                let key = format!("{:06.2}", label);
                 z_index
                     .entry(key)
                     .or_insert_with(|| ZIndexValue(layer_idx, path_count));
