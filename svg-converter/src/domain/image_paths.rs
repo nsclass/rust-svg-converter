@@ -156,34 +156,35 @@ impl ScanPaths {
                     let current_idx = row * width + col;
 
                     // Init
-                    let mut px = col;
-                    let mut py = row;
+                    let mut px = col as i32;
+                    let mut py = row as i32;
 
                     let mut current_paths = Vec::<PathPoint>::new();
 
                     // fill paths will be drawn, but hole paths are also required to remove unnecessary edge nodes
-                    let mut dir = PATH_SCAN_DIR_LOOKUP[layer[py][px] as usize];
-                    let hole_path = PATH_SCAN_HOLE_PATH_LOOKUP[layer[py][px] as usize];
+                    let mut dir = PATH_SCAN_DIR_LOOKUP[layer[py as usize][px as usize] as usize];
+                    let hole_path =
+                        PATH_SCAN_HOLE_PATH_LOOKUP[layer[py as usize][px as usize] as usize];
 
                     // Path points loop
                     loop {
                         // New path point
                         let current_point =
-                            PathPoint::new((px - 1) as i32, (py - 1) as i32, layer[py][px]);
+                            PathPoint::new(px - 1, py - 1, layer[py as usize][px as usize]);
 
                         current_paths.push(current_point);
 
                         // Next: look up the replacement, direction and coordinate changes = clear this cell, turn if required, walk forward
-                        let lookup_row =
-                            PATH_SCAN_COMBINED_LOOKUP[layer[py][px] as usize][dir as usize];
-                        layer[py][px] = lookup_row[0] as i32;
+                        let lookup_row = PATH_SCAN_COMBINED_LOOKUP
+                            [layer[py as usize][px as usize] as usize][dir as usize];
+                        layer[py as usize][px as usize] = lookup_row[0] as i32;
                         dir = lookup_row[1];
-                        px += lookup_row[2] as usize;
-                        py += lookup_row[3] as usize;
+                        px += lookup_row[2] as i32;
+                        py += lookup_row[3] as i32;
 
                         // Close path
-                        if ((px - 1) == current_paths[0].row())
-                            && ((py - 1) == current_paths[0].col())
+                        if ((px - 1) == current_paths[0].row() as i32)
+                            && ((py - 1) == current_paths[0].col() as i32)
                         {
                             // Discarding 'hole' type paths and paths shorter than pathOmit
                             if (!hole_path) && (current_paths.len() >= path_omit as usize) {
@@ -197,6 +198,7 @@ impl ScanPaths {
                 }
             }
         }
+        let paths = paths.into_iter().filter(|path| path.len() > 0).collect();
         ScanPaths { paths }
     }
 

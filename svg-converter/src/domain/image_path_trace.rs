@@ -1,7 +1,7 @@
 use crate::{BatchInterpolation, InterpolationNodeList};
 
 pub struct ImagePathTrace {
-    trace_paths: Vec<Vec<f64>>,
+    trace_paths: Vec<[f64; 7]>,
 }
 
 impl ImagePathTrace {
@@ -11,7 +11,7 @@ impl ImagePathTrace {
         let mut sequence_type1: f64 = 0.;
         let mut sequence_type2: f64 = 0.;
 
-        let mut trace_paths = Vec::<Vec<f64>>::new();
+        let mut trace_paths = Vec::<[f64; 7]>::new();
         //Double [] thissegment;
         let path_length = path.len();
 
@@ -37,8 +37,13 @@ impl ImagePathTrace {
             }
 
             // 5.2. - 5.6. Split sequence and recursively apply 5.2. - 5.6. to startPoint-splitPoint and splitPoint-endPoint sequences
-            let mut path_sequence =
-                fit_sequence(path, l_threshold, q_threshold, path_index, sequence_end);
+            let mut path_sequence = fit_sequence(
+                path,
+                l_threshold,
+                q_threshold,
+                path_index as i32,
+                sequence_end as i32,
+            );
             trace_paths.append(&mut path_sequence);
             // 5.7. TODO? If splitPoint-endPoint is a spline, try to add new points from the next sequence
 
@@ -49,6 +54,7 @@ impl ImagePathTrace {
                 path_index = path_length;
             }
         }
+        assert!(trace_paths.len() > 0);
         Self { trace_paths }
     }
 
@@ -56,7 +62,7 @@ impl ImagePathTrace {
         self.trace_paths[idx1][idx2]
     }
 
-    pub fn index_at(&self, idx: usize) -> &Vec<f64> {
+    pub fn index_at(&self, idx: usize) -> &[f64; 7] {
         &self.trace_paths[idx]
     }
 
@@ -69,12 +75,11 @@ fn fit_sequence(
     path: &InterpolationNodeList,
     l_threshold: f32,
     q_threshold: f32,
-    seq_start: usize,
-    seq_end: usize,
-) -> Vec<Vec<f64>> {
-    let mut segment = Vec::<Vec<f64>>::new();
-    let mut thisSegment = Vec::<f64>::new();
-    let path_length = path.len();
+    seq_start: i32,
+    seq_end: i32,
+) -> Vec<[f64; 7]> {
+    let mut segment = Vec::<[f64; 7]>::new();
+    let path_length = path.len() as i32;
 
     // return if invalid seqEnd
     if (seq_end > path_length) || (seq_end < 0) {
@@ -90,8 +95,12 @@ fn fit_sequence(
     if tl < 0. {
         tl += path_length as f64;
     }
-    let vx = (path.point_at_seq_idx(seq_end, 0) - path.point_at_seq_idx(seq_start, 0)) / tl;
-    let vy = (path.point_at_seq_idx(seq_end, 1) - path.point_at_seq_idx(seq_start, 1)) / tl;
+    let vx = (path.point_at_seq_idx(seq_end as usize, 0)
+        - path.point_at_seq_idx(seq_start as usize, 0))
+        / tl;
+    let vy = (path.point_at_seq_idx(seq_end as usize, 1)
+        - path.point_at_seq_idx(seq_start as usize, 1))
+        / tl;
 
     // 5.2. Fit a straight line on the sequence
     let mut path_index = (seq_start + 1) % path_length;
@@ -100,12 +109,12 @@ fn fit_sequence(
         if pl < 0. {
             pl += path_length as f64;
         }
-        px = path.point_at_seq_idx(seq_start, 0) + (vx * pl as f64);
-        py = path.point_at_seq_idx(seq_start, 1) + (vy * pl as f64);
-        let dist2 = ((path.point_at_seq_idx(path_index, 0) - px)
-            * (path.point_at_seq_idx(path_index, 0) - px))
-            + ((path.point_at_seq_idx(path_index, 1) - py)
-                * (path.point_at_seq_idx(path_index, 1) - py));
+        px = path.point_at_seq_idx(seq_start as usize, 0) + (vx * pl as f64);
+        py = path.point_at_seq_idx(seq_start as usize, 1) + (vy * pl as f64);
+        let dist2 = ((path.point_at_seq_idx(path_index as usize, 0) - px)
+            * (path.point_at_seq_idx(path_index as usize, 0) - px))
+            + ((path.point_at_seq_idx(path_index as usize, 1) - py)
+                * (path.point_at_seq_idx(path_index as usize, 1) - py));
         if dist2 > l_threshold as f64 {
             curve_pass = false;
         }
@@ -118,12 +127,12 @@ fn fit_sequence(
 
     // return straight line if fits
     if curve_pass {
-        let mut current_segment = vec![0 as f64; 7];
+        let mut current_segment: [f64; 7] = [0.0; 7];
         current_segment[0] = 1.0;
-        current_segment[1] = path.point_at_seq_idx(seq_start, 0);
-        current_segment[2] = path.point_at_seq_idx(seq_start, 1);
-        current_segment[3] = path.point_at_seq_idx(seq_end, 0);
-        current_segment[4] = path.point_at_seq_idx(seq_end, 1);
+        current_segment[1] = path.point_at_seq_idx(seq_start as usize, 0);
+        current_segment[2] = path.point_at_seq_idx(seq_start as usize, 1);
+        current_segment[3] = path.point_at_seq_idx(seq_end as usize, 0);
+        current_segment[4] = path.point_at_seq_idx(seq_end as usize, 1);
         current_segment[5] = 0.0;
         current_segment[6] = 0.0;
         segment.push(current_segment);
@@ -141,13 +150,13 @@ fn fit_sequence(
     let mut t1 = (1.0 - t) * (1.0 - t);
     let mut t2 = 2. * (1. - t) * t;
     let mut t3 = t * t;
-    let cpx = (((t1 * path.point_at_seq_idx(seq_start, 0))
-        + (t3 * path.point_at_seq_idx(seq_end, 0)))
-        - path.point_at_seq_idx(fit_point, 0))
+    let cpx = (((t1 * path.point_at_seq_idx(seq_start as usize, 0))
+        + (t3 * path.point_at_seq_idx(seq_end as usize, 0)))
+        - path.point_at_seq_idx(fit_point as usize, 0))
         / -t2;
-    let cpy = (((t1 * path.point_at_seq_idx(seq_start, 1))
-        + (t3 * path.point_at_seq_idx(seq_end, 1)))
-        - path.point_at_seq_idx(fit_point, 1))
+    let cpy = (((t1 * path.point_at_seq_idx(seq_start as usize, 1))
+        + (t3 * path.point_at_seq_idx(seq_end as usize, 1)))
+        - path.point_at_seq_idx(fit_point as usize, 1))
         / -t2;
 
     // Check every point
@@ -157,17 +166,17 @@ fn fit_sequence(
         t1 = (1.0 - t) * (1.0 - t);
         t2 = 2.0 * (1.0 - t) * t;
         t3 = t * t;
-        px = (t1 * path.point_at_seq_idx(seq_start, 0))
+        px = (t1 * path.point_at_seq_idx(seq_start as usize, 0))
             + (t2 * cpx)
-            + (t3 * path.point_at_seq_idx(seq_end, 0));
-        py = (t1 * path.point_at_seq_idx(seq_start, 1))
+            + (t3 * path.point_at_seq_idx(seq_end as usize, 0));
+        py = (t1 * path.point_at_seq_idx(seq_start as usize, 1))
             + (t2 * cpy)
-            + (t3 * path.point_at_seq_idx(seq_end, 1));
+            + (t3 * path.point_at_seq_idx(seq_end as usize, 1));
 
-        let dist2 = ((path.point_at_seq_idx(path_index, 0) - px)
-            * (path.point_at_seq_idx(path_index, 0) - px))
-            + ((path.point_at_seq_idx(path_index, 1) - py)
-                * (path.point_at_seq_idx(path_index, 1) - py));
+        let dist2 = ((path.point_at_seq_idx(path_index as usize, 0) - px)
+            * (path.point_at_seq_idx(path_index as usize, 0) - px))
+            + ((path.point_at_seq_idx(path_index as usize, 1) - py)
+                * (path.point_at_seq_idx(path_index as usize, 1) - py));
 
         if dist2 > q_threshold as f64 {
             curve_pass = false;
@@ -181,27 +190,27 @@ fn fit_sequence(
 
     // return spline if fits
     if curve_pass {
-        let mut current_segment = vec![0 as f64; 7];
+        let mut current_segment = [0.; 7];
         current_segment[0] = 2.0;
-        current_segment[1] = path.point_at_seq_idx(seq_start, 0);
-        current_segment[2] = path.point_at_seq_idx(seq_start, 1);
+        current_segment[1] = path.point_at_seq_idx(seq_start as usize, 0);
+        current_segment[2] = path.point_at_seq_idx(seq_start as usize, 1);
         current_segment[3] = cpx;
         current_segment[4] = cpy;
-        current_segment[5] = path.point_at_seq_idx(seq_end, 0);
-        current_segment[6] = path.point_at_seq_idx(seq_end, 1);
+        current_segment[5] = path.point_at_seq_idx(seq_end as usize, 0);
+        current_segment[6] = path.point_at_seq_idx(seq_end as usize, 1);
         segment.push(current_segment);
         return segment;
     }
 
     // 5.5. If the spline fails (an error>qThreshold), find the point with the biggest error,
     // set splitPoint = (fitting point + errorPoint)/2
-    let splitPoint = (fit_point + error_point) / 2;
+    let split_point = (fit_point + error_point) / 2;
 
     // 5.6. Split sequence and recursively apply 5.2. - 5.6. to startPoint-splitPoint and splitPoint-endpoint sequences
-    let mut segment_created = fit_sequence(path, l_threshold, q_threshold, seq_start, splitPoint);
+    let segment_created = fit_sequence(path, l_threshold, q_threshold, seq_start, split_point);
     segment = segment_created;
 
-    let mut segment_another = fit_sequence(path, l_threshold, q_threshold, splitPoint, seq_end);
+    let mut segment_another = fit_sequence(path, l_threshold, q_threshold, split_point, seq_end);
     segment.append(&mut segment_another);
     return segment;
 }

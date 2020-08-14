@@ -104,3 +104,25 @@ pub fn svg_converted_str_from_base64_image(base64: String) -> Result<String, Err
         }
     })
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs;
+    static SAMPLE_BASE64: &'static str =
+        include_str!("../../testing_data/samples/image_sample_base64.txt");
+
+    #[test]
+    fn svg_conversion_success() {
+        // let data = fs::read_to_string("/etc/hosts").expect("Unable to read file");
+        let res = svg_converted_str_from_base64_image(SAMPLE_BASE64.to_string());
+        match res {
+            Ok(svg_string) => {
+                assert!(svg_string.len() > 0);
+                // fs::write("/Users/nsclass/tmp/output.svg", svg_string)
+                //     .expect("Unable to write file");
+            }
+            Err(err) => assert!(false, format!("failed to generate a svg image: {}", err)),
+        }
+    }
+}

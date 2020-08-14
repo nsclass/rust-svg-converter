@@ -9,7 +9,7 @@ fn create_interpolation_node_list(scan_path: &ScanPaths) -> BatchInterpolation {
         let node_list = InterpolationNodeList::new(scan_path.index_at(idx));
         inter_node_list.push(node_list);
     }
-
+    assert!(inter_node_list.len() > 0);
     BatchInterpolation::new(inter_node_list)
 }
 

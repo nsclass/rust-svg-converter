@@ -1,27 +1,26 @@
-
 #[derive(Debug)]
 pub struct ImageConvertOptions {
     pub l_threshold: f32,
     pub q_threshold: f32,
     pub path_omit: u32,
-    pub color_sampling : bool,
-    pub number_of_colors : u32,
-    pub min_color_ratio : f32,
-    pub color_quant_cycles : u32,
-    pub scale : f32,
-    pub simplify_tolerance : f32,
-    pub round_coords : f32,
-    pub l_cpr : f32,
-    pub q_cpr : f32,
-    pub show_description : bool,
-    pub view_box : f32,
-    pub blur_radius : f32,
-    pub blur_delta : f32,
+    pub color_sampling: bool,
+    pub number_of_colors: u32,
+    pub min_color_ratio: f32,
+    pub color_quant_cycles: u32,
+    pub scale: f32,
+    pub simplify_tolerance: f32,
+    pub round_coords: f32,
+    pub l_cpr: f32,
+    pub q_cpr: f32,
+    pub show_description: bool,
+    pub view_box: f32,
+    pub blur_radius: f32,
+    pub blur_delta: f32,
 }
 
 impl Default for ImageConvertOptions {
     fn default() -> ImageConvertOptions {
-            ImageConvertOptions {
+        ImageConvertOptions {
             l_threshold: 1.0,
             q_threshold: 1.0,
             path_omit: 8,

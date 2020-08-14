@@ -86,6 +86,7 @@ impl InterpolationNodeList {
             nodes[path_index] = InterpolationNode::new(current_point);
         }
 
+        assert!(nodes.len() > 0);
         Self { inter_nodes: nodes }
     }
     pub fn len(&self) -> usize {
