@@ -102,9 +102,8 @@ pub fn svg_converted_str_from_base64_image(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::fs;
     static SAMPLE_BASE64: &'static str =
-        include_str!("../../testing_data/samples/image_sample_base64.txt");
+        include_str!("../../svg-web-service/tests/bdd/features/samples/image_sample_base64.txt");
 
     #[test]
     fn svg_conversion_success() {
@@ -112,16 +111,16 @@ mod tests {
 
         impl OperationProgressListener for ProgressListener {
             fn on_progress(&self, desc: &str, cur: usize, total: usize) {
-                println!("{}, {}, {}", desc, cur, total);
+                println!("progress: {}, {}/{}", desc, cur + 1, total);
             }
         }
-        // let data = fs::read_to_string("/etc/hosts").expect("Unable to read file");
+        // let data = std::fs::read_to_string("/etc/hosts").expect("Unable to read file");
         let res =
             svg_converted_str_from_base64_image(SAMPLE_BASE64.to_string(), &ProgressListener {});
         match res {
             Ok(svg_string) => {
                 assert!(svg_string.len() > 0);
-                // fs::write("/Users/nsclass/tmp/output.svg", svg_string)
+                // std::fs::write("/Users/nsclass/tmp/output.svg", svg_string)
                 //     .expect("Unable to write file");
             }
             Err(err) => assert!(false, format!("failed to generate a svg image: {}", err)),

@@ -112,12 +112,8 @@ impl BatchInterpolation {
         Self { batch_inter_nodes }
     }
 
-    pub fn len(&self) -> usize {
-        self.batch_inter_nodes.len()
-    }
-
-    pub fn index_at(&self, idx: usize) -> &InterpolationNodeList {
-        &self.batch_inter_nodes[idx]
+    pub fn values(&self) -> std::slice::Iter<'_, InterpolationNodeList> {
+        self.batch_inter_nodes.iter()
     }
 }
 
@@ -131,11 +127,7 @@ impl InterpolationBatchList {
         Self { batch_list }
     }
 
-    pub fn len(&self) -> usize {
-        self.batch_list.len()
-    }
-
-    pub fn index_at(&self, idx: usize) -> &BatchInterpolation {
-        &self.batch_list[idx]
+    pub fn values(&self) -> std::slice::Iter<'_, BatchInterpolation> {
+        self.batch_list.iter()
     }
 }

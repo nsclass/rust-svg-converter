@@ -89,8 +89,7 @@ fn generate_svg_path_from_trace_paths(
     sb.push_str(&path_str);
 
     if round_coords == -1. {
-        for idx in 0..segments.len() {
-            let segment = segments.index_at(idx);
+        segments.values().for_each(|segment| {
             if segment[0] == 1.0 {
                 let svg_str = format!("L {} {} ", segment[3] * scale, segment[4] * scale);
                 sb.push_str(&svg_str);
@@ -104,10 +103,9 @@ fn generate_svg_path_from_trace_paths(
                 );
                 sb.push_str(&svg_str);
             }
-        }
+        });
     } else {
-        for idx in 0..segments.len() {
-            let segment = segments.index_at(idx);
+        segments.values().for_each(|segment| {
             if segment[0] == 1.0 {
                 let svg_str = format!(
                     "L {} {} ",
@@ -125,14 +123,13 @@ fn generate_svg_path_from_trace_paths(
                 );
                 sb.push_str(&svg_str);
             }
-        }
+        });
     } // End of roundCoords check
 
     sb.push_str("Z\" />");
 
     // Rendering control points
-    for idx in 0..segments.len() {
-        let segment = segments.index_at(idx);
+    segments.values().for_each(|segment| {
         if (lcpr > 0.) && (segment[0] == 1.0) {
             let svg_str = format!("<circle cx=\"{}\" cy=\"{}\" r=\"{} \" fill=\"white\" stroke-width=\"{} \" stroke=\"black\" />",
                 segment[3] * scale, segment[4] * scale, lcpr, lcpr * 0.2);
@@ -156,7 +153,7 @@ fn generate_svg_path_from_trace_paths(
                 segment[3] * scale, segment[4] * scale, segment[5] * scale,segment[6] * scale,qcpr * 0.2);
             sb.push_str(&svg_str);
         }
-    }
+    });
 }
 
 fn round_to_decimal(val: f32, places: f32) -> f32 {

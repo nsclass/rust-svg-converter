@@ -62,12 +62,8 @@ impl ImagePathTrace {
         self.trace_paths[idx1][idx2]
     }
 
-    pub fn index_at(&self, idx: usize) -> &[f64; 7] {
-        &self.trace_paths[idx]
-    }
-
-    pub fn len(&self) -> usize {
-        self.trace_paths.len()
+    pub fn values(&self) -> std::slice::Iter<'_, [f64; 7]> {
+        self.trace_paths.iter()
     }
 }
 
@@ -221,13 +217,15 @@ pub struct ImagePathTraceList {
 
 impl ImagePathTraceList {
     pub fn new(batch: &BatchInterpolation, l_threshold: f32, q_threshold: f32) -> Self {
-        let mut trace_paths = Vec::<ImagePathTrace>::new();
-
-        for idx in 0..batch.len() {
-            let trace_path = ImagePathTrace::new(batch.index_at(idx), l_threshold, q_threshold);
-            trace_paths.push(trace_path)
-        }
+        let trace_paths = batch
+            .values()
+            .map(|node_list| ImagePathTrace::new(node_list, l_threshold, q_threshold))
+            .collect();
         Self { trace_paths }
+    }
+
+    pub fn values(&self) -> std::slice::Iter<'_, ImagePathTrace> {
+        self.trace_paths.iter()
     }
 
     pub fn len(&self) -> usize {

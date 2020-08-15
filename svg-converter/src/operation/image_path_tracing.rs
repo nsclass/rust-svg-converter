@@ -4,15 +4,14 @@ use crate::{
 
 pub fn image_path_tracing(ctx: SvgConversionCtx) -> Result<SvgConversionCtx, Error> {
     if let Some((palette, indexed_image, batch_list, options)) = ctx.into_batch_interpolation() {
-        let mut trace_path_layers = Vec::<ImagePathTraceList>::new();
-        for idx in 0..batch_list.len() {
-            let trace_layer = generate_trace_path_layer(
-                batch_list.index_at(idx),
-                options.l_threshold,
-                options.q_threshold,
-            );
-            trace_path_layers.push(trace_layer);
-        }
+        let trace_path_layers = batch_list
+            .values()
+            .map(|batch| {
+                let trace_layer =
+                    generate_trace_path_layer(batch, options.l_threshold, options.q_threshold);
+                trace_layer
+            })
+            .collect();
 
         let layers = ImagePathTraceLayers::new(trace_path_layers);
 
