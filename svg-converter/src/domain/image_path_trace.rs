@@ -13,9 +13,9 @@ pub struct ImagePathTrace {
 impl ImagePathTrace {
     pub fn new(path: &InterpolationNodeList, l_threshold: f32, q_threshold: f32) -> Self {
         let mut path_index = 0;
-        let mut sequence_end = 0;
-        let mut sequence_type1: f64 = 0.;
-        let mut sequence_type2: f64 = 0.;
+        let mut sequence_end: usize;
+        let mut sequence_type1: f64;
+        let mut sequence_type2: f64;
 
         let mut trace_paths = Vec::<[f64; 7]>::new();
         //Double [] thissegment;
@@ -90,8 +90,8 @@ fn fit_sequence(
 
     let mut error_point = seq_start;
     let mut curve_pass = true;
-    let mut px = 0.;
-    let mut py = 0.;
+    let mut px: f64;
+    let mut py: f64;
     let mut error_val = 0.;
     let mut tl = (seq_end - seq_start) as f64;
     if tl < 0. {

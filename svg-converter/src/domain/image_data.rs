@@ -43,19 +43,6 @@ impl ImageData {
         self.data[idx]
     }
 
-    pub fn index_row_col(&self, row: u32, col: u32) -> u8 {
-        if 0 > row || row >= self.height as u32 {
-            return 0xff;
-        }
-
-        if 0 > col || col >= self.width as u32 {
-            return 0xff;
-        }
-
-        let idx = row as usize * self.height + col as usize;
-        return self.data[idx];
-    }
-
     pub fn into_color(self) -> ImageColorData {
         let color_data = self
             .data
