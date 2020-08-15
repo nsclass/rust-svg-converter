@@ -1,4 +1,5 @@
 use crate::Path;
+use rayon::{prelude::*, slice::Iter};
 
 #[derive(Debug, Default, Clone)]
 pub struct InterpolationNode {
@@ -112,8 +113,8 @@ impl BatchInterpolation {
         Self { batch_inter_nodes }
     }
 
-    pub fn values(&self) -> std::slice::Iter<'_, InterpolationNodeList> {
-        self.batch_inter_nodes.iter()
+    pub fn par_values(&self) -> Iter<InterpolationNodeList> {
+        self.batch_inter_nodes.par_iter()
     }
 }
 
@@ -127,7 +128,7 @@ impl InterpolationBatchList {
         Self { batch_list }
     }
 
-    pub fn values(&self) -> std::slice::Iter<'_, BatchInterpolation> {
-        self.batch_list.iter()
+    pub fn par_values(&self) -> Iter<BatchInterpolation> {
+        self.batch_list.par_iter()
     }
 }

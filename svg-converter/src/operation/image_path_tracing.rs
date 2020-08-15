@@ -1,11 +1,12 @@
 use crate::{
     BatchInterpolation, Error, ImagePathTraceLayers, ImagePathTraceList, SvgConversionCtx,
 };
+use rayon::prelude::*;
 
 pub fn image_path_tracing(ctx: SvgConversionCtx) -> Result<SvgConversionCtx, Error> {
     if let Some((palette, indexed_image, batch_list, options)) = ctx.into_batch_interpolation() {
         let trace_path_layers = batch_list
-            .values()
+            .par_values()
             .map(|batch| {
                 let trace_layer =
                     generate_trace_path_layer(batch, options.l_threshold, options.q_threshold);

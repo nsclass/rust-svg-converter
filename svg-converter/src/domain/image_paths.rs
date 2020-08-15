@@ -1,3 +1,5 @@
+use rayon::{prelude::*, slice::Iter};
+
 // static NUMBERS: &'static [i32] = &[1, 2, 3, 4, 5];
 static PATH_SCAN_DIR_LOOKUP: &'static [i8] = &[0, 0, 3, 0, 1, 0, 3, 0, 0, 3, 3, 1, 0, 3, 0, 0];
 static PATH_SCAN_HOLE_PATH_LOOKUP: &'static [bool] = &[
@@ -202,12 +204,8 @@ impl ScanPaths {
         ScanPaths { paths }
     }
 
-    pub fn index_at(&self, idx: usize) -> &Path {
-        &self.paths[idx]
-    }
-
-    pub fn len(&self) -> usize {
-        self.paths.len()
+    pub fn par_values(&self) -> Iter<Path> {
+        self.paths.par_iter()
     }
 }
 
@@ -220,10 +218,7 @@ impl ScanPathList {
     pub fn new(scan_paths: Vec<ScanPaths>) -> Self {
         Self { scan_paths }
     }
-    pub fn index_at(&self, idx: usize) -> &ScanPaths {
-        &self.scan_paths[idx]
-    }
-    pub fn len(&self) -> usize {
-        self.scan_paths.len()
+    pub fn par_values(&self) -> Iter<ScanPaths> {
+        self.scan_paths.par_iter()
     }
 }

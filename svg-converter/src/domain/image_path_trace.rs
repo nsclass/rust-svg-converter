@@ -1,4 +1,5 @@
 use crate::{BatchInterpolation, InterpolationNodeList};
+use rayon::{prelude::*, slice::Iter};
 
 pub struct ImagePathTrace {
     trace_paths: Vec<[f64; 7]>,
@@ -218,14 +219,10 @@ pub struct ImagePathTraceList {
 impl ImagePathTraceList {
     pub fn new(batch: &BatchInterpolation, l_threshold: f32, q_threshold: f32) -> Self {
         let trace_paths = batch
-            .values()
+            .par_values()
             .map(|node_list| ImagePathTrace::new(node_list, l_threshold, q_threshold))
             .collect();
         Self { trace_paths }
-    }
-
-    pub fn values(&self) -> std::slice::Iter<'_, ImagePathTrace> {
-        self.trace_paths.iter()
     }
 
     pub fn len(&self) -> usize {
