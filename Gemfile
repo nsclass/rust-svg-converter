@@ -2,5 +2,5 @@ source "https://rubygems.org"
 
 gem 'cucumber'
 gem 'json_spec'
-gem 'json'
+gem "json", ">= 2.3.0"
 gem 'rest-client'
