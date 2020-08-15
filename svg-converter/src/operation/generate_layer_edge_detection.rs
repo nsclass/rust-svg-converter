@@ -1,3 +1,8 @@
+// Copyright (c) 2020 Nam Seob Seo
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
 use crate::{Error, SvgConversionCtx};
 
 pub fn generate_layer_edge_detection(ctx: SvgConversionCtx) -> Result<SvgConversionCtx, Error> {

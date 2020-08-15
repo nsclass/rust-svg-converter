@@ -1,3 +1,8 @@
+// Copyright (c) 2020 Nam Seob Seo
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
 // include!("image_convert_options.rs");
 // include!("svg_conversion_ctx.rs");
 // include!("image_data.rs");

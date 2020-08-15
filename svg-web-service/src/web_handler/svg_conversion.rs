@@ -1,9 +1,14 @@
+// Copyright (c) 2020 Nam Seob Seo
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
 use actix_web::{error, put, web, Error, HttpRequest, HttpResponse};
 use bytes::BytesMut;
 
 use futures::StreamExt;
 use serde::{Deserialize, Serialize};
-use svg_converter::{OperationProgressListener, svg_converted_str_from_base64_image};
+use svg_converter::{svg_converted_str_from_base64_image, OperationProgressListener};
 use tracing::info;
 
 #[derive(Serialize, Deserialize)]

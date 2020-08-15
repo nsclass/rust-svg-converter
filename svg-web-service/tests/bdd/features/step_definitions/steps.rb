@@ -1,3 +1,8 @@
+# Copyright (c) 2020 Nam Seob Seo
+# 
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
+
 
 When(/^I send (GET|POST|PUT|PATCH) "(.+)" without token$/) do |method, url|
   request_http_with_token(method, url, get_bearer_token)

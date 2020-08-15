@@ -1,3 +1,8 @@
+# Copyright (c) 2020 Nam Seob Seo
+# 
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
+
 
 def last_json
   $http_json_response

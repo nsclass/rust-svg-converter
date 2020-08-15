@@ -1,3 +1,8 @@
+// Copyright (c) 2020 Nam Seob Seo
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
 // include!("palette_generation.rs");
 // include!("color_quantization.rs");
 mod batch_interpolation;

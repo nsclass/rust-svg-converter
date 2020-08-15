@@ -1,3 +1,8 @@
+// Copyright (c) 2020 Nam Seob Seo
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
 use crate::{BatchInterpolation, InterpolationNodeList};
 use rayon::{prelude::*, slice::Iter};
 

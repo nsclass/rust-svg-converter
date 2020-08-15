@@ -1,3 +1,8 @@
+// Copyright (c) 2020 Nam Seob Seo
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
 use crate::domain::ImageConvertOptions;
 use crate::domain::ImageData;
 use crate::{ImageColorData, ImagePathTraceLayers, InterpolationBatchList, ScanPathList};

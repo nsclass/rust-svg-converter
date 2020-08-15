@@ -1,3 +1,8 @@
+// Copyright (c) 2020 Nam Seob Seo
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
 use crate::{Error, ImageData, SvgConversionCtx};
 use exoquant::{convert_to_indexed, ditherer, optimizer};
 

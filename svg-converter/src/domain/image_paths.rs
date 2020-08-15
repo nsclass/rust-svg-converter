@@ -1,3 +1,8 @@
+// Copyright (c) 2020 Nam Seob Seo
+//
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
 use rayon::{prelude::*, slice::Iter};
 
 // static NUMBERS: &'static [i32] = &[1, 2, 3, 4, 5];
