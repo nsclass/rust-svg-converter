@@ -21,7 +21,13 @@ PUT `http://localhost:8080/svg/conversion`
 
 ### Payload
 
-IMAGE_DATA should be encoded with base64 for an image.
+IMAGE_DATA should be encoded with base64 as an image media type. The encoded string needs to start with `data:image/jpeg;base64`
+
+- Example file
+
+```
+https://github.com/nsclass/rust-svg-converter/blob/master/svg-web-service/tests/bdd/features/samples/image_sample_base64.txt
+```
 
 ```
 {
