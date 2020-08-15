@@ -3,13 +3,11 @@
 The SVG converter written in Rust programming language which is ported from Java version of SVG converter.
 [https://github.com/nsclass/ns-svg-converter](https://github.com/nsclass/ns-svg-converter)
 
-# HTTP end points
+# HTTP End Points
 
 This application is exposing the following HTTP end points
 
-## health check
-
-Health checking
+## Health checking API
 
 GET `http://localhost:8080/health`
 
@@ -17,9 +15,7 @@ GET `http://localhost:8080/health`
 {"status": "UP"}
 ```
 
-## SVG convert
-
-SVG image conversion
+## SVG conversion API
 
 PUT `http://localhost:8080/svg/conversion`
 
