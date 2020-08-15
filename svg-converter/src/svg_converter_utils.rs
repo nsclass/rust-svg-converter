@@ -10,14 +10,6 @@ use crate::{
     utils::OperationProgressListener,
 };
 
-struct ProgressListener {}
-
-impl OperationProgressListener for ProgressListener {
-    fn on_progress(&self, desc: &str, cur: usize, total: usize) {
-        println!("{}, {}, {}", desc, cur, total);
-    }
-}
-
 fn create_image_data(ctx: SvgConversionCtx) -> Result<(ImageData, ImageConvertOptions), Error> {
     match ctx {
         SvgConversionCtx::Base64Image((base64, options)) => {
@@ -41,10 +33,12 @@ fn create_image_data(ctx: SvgConversionCtx) -> Result<(ImageData, ImageConvertOp
     }
 }
 
-pub fn svg_converted_str_from_base64_image(base64: String) -> Result<String, Error> {
-    let listener = ProgressListener {};
+pub fn svg_converted_str_from_base64_image(
+    base64: String,
+    progress_listener: &dyn OperationProgressListener,
+) -> Result<String, Error> {
     let mut operation_manager: OperationManager<SvgConversionCtx> =
-        OperationManager::new(&listener);
+        OperationManager::new(progress_listener);
 
     let options = ImageConvertOptions::default();
     let ctx = SvgConversionCtx::Base64Image((base64, options));
@@ -114,8 +108,16 @@ mod tests {
 
     #[test]
     fn svg_conversion_success() {
+        struct ProgressListener {}
+
+        impl OperationProgressListener for ProgressListener {
+            fn on_progress(&self, desc: &str, cur: usize, total: usize) {
+                println!("{}, {}, {}", desc, cur, total);
+            }
+        }
         // let data = fs::read_to_string("/etc/hosts").expect("Unable to read file");
-        let res = svg_converted_str_from_base64_image(SAMPLE_BASE64.to_string());
+        let res =
+            svg_converted_str_from_base64_image(SAMPLE_BASE64.to_string(), &ProgressListener {});
         match res {
             Ok(svg_string) => {
                 assert!(svg_string.len() > 0);
