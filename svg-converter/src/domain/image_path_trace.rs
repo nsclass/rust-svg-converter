@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 
 use crate::{BatchInterpolation, InterpolationNodeList};
-use rayon::{prelude::*, slice::Iter};
+use rayon::prelude::*;
 
 pub struct ImagePathTrace {
     trace_paths: Vec<[f64; 7]>,

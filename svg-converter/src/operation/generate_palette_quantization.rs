@@ -73,7 +73,7 @@ mod tests {
         let ctx = SvgConversionCtx::ImageData((image, ImageConvertOptions::default()));
         let res = generate_palette_quantization(ctx);
         match res {
-            Ok(SvgConversionCtx::ColorQuantization((palette, image, options))) => {
+            Ok(SvgConversionCtx::ColorQuantization((palette, image, _options))) => {
                 assert_eq!(palette.len(), 16);
                 assert_eq!(image.len(), 144);
                 for row in 0..image.height {
