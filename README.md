@@ -7,7 +7,7 @@ The SVG converter written in Rust programming language which is ported from Java
 
 This application is exposing the following HTTP end points
 
-## Health checking API
+## Health Checking API
 
 GET `http://localhost:8080/health`
 
@@ -15,7 +15,7 @@ GET `http://localhost:8080/health`
 {"status": "UP"}
 ```
 
-## SVG conversion API
+## SVG Conversion API
 
 PUT `http://localhost:8080/svg/conversion`
 
