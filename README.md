@@ -1,4 +1,4 @@
-# Rust SVG image converter ![Rust SVG Converter](https://github.com/nsclass/rust-svg-converter/workflows/Rust%20SVG%20Converter/badge.svg)
+# Rust SVG image converter ![tests](https://github.com/nsclass/rust-svg-converter/workflows/tests/badge.svg)
 
 The SVG converter written in Rust programming language which is ported from Java version of SVG converter.
 [https://github.com/nsclass/ns-svg-converter](https://github.com/nsclass/ns-svg-converter)
