@@ -13,7 +13,7 @@ const SVGConvertingView = ({ imageFilename, loading, svgData, errorMsg }) => {
 
   if (loading) {
     return (
-      <div>
+      <div className="mx-auto">
         <div className="portfolio-caption text-center">
           <h4>Converting an image({imageFilename})...</h4>
           <i className="fa fa-refresh fa-spin fa-3x fa-fw"></i>
@@ -39,8 +39,8 @@ const SVGConvertingView = ({ imageFilename, loading, svgData, errorMsg }) => {
     `data:image/svg+xml;base64,${Buffer.from(SVG).toString("base64")}`
 
   return (
-    <div>
-      <img src={convertSvgToBase64ImgString(svgData)} />
+    <div className="mx-auto">
+      <img className="img-fluid" src={convertSvgToBase64ImgString(svgData)} />
       <div className="portfolio-caption">
         <h4>Converted SVG image</h4>
         <button className="btn btn-success" onClick={(e) => downloadSvgFile()}>
@@ -100,18 +100,20 @@ const SVGConverter = ({ imageFilename, imageData }) => {
   }
 
   return (
-    <div className="row col-lg-12 text-center">
-      <div className="col-md-6 col-sm-6 portfolio-item">
-        <img className="img-fluid" src={imageData} />
-        <div className="portfolio-caption">
-          <h4>Original image</h4>
-          <button className="btn btn-success" onClick={(e) => convertSvg()}>
-            Convert
-          </button>
+    <>
+      <div className="row col-lg-12 text-center">
+        <div className="mx-auto">
+          <img className="img-fluid" src={imageData} />
+          <div className="portfolio-caption">
+            <h4>Original image</h4>
+            <button className="btn btn-success" onClick={(e) => convertSvg()}>
+              Convert
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="col-md-6 col-sm-6 align-self-center">
+      <div className="row col-lg-12 text-center">
         <SVGConvertingView
           imageFilename={imageFilename}
           loading={loading}
@@ -119,7 +121,7 @@ const SVGConverter = ({ imageFilename, imageData }) => {
           errorMsg={errorMsg}
         />
       </div>
-    </div>
+    </>
   )
 }
 
