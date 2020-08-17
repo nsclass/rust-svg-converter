@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-use actix_web::{error, put, web, Error, HttpRequest, HttpResponse};
+use actix_web::{error, web, Error, HttpRequest, HttpResponse};
 use bytes::BytesMut;
 
 use futures::StreamExt;

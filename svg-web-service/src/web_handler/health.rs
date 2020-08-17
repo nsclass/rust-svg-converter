@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-use actix_web::{get, HttpRequest, HttpResponse};
+use actix_web::{HttpRequest, HttpResponse};
 use serde::Deserialize;
 use serde::Serialize;
 
