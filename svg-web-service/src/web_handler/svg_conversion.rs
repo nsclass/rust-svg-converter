@@ -41,7 +41,6 @@ impl OperationProgressListener for ProgressListener {
     }
 }
 
-#[put("/svg/conversion")]
 pub async fn svg_convert(
     _req: HttpRequest,
     mut payload: web::Payload,

@@ -12,7 +12,6 @@ struct HealthStatus {
     status: String,
 }
 
-#[get("/health")]
 pub async fn health(_req: HttpRequest) -> HttpResponse {
     HttpResponse::Ok().json(HealthStatus {
         status: "UP".to_string(),
