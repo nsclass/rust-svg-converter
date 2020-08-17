@@ -88,3 +88,17 @@ https://github.com/nsclass/rust-svg-converter/blob/master/svg-web-service/tests/
   "image_base64_data": %{IMAGE_DATA}
 }
 ```
+
+# Docker Deployment
+
+## Build an Image
+
+```
+$ docker build -t [image-name:version] .
+```
+
+## Run the Image
+
+```
+$ docker run -d --name=[name] -p 8080:8080 [image-name]
+```
