@@ -100,5 +100,5 @@ $ docker build -t [image-name:version] .
 ## Run the Image
 
 ```
-$ docker run -d --name=[name] -p 8080:8080 [image-name]
+$ docker run -d --rm --name=[name] -p 8080:8080 [image-name]
 ```
