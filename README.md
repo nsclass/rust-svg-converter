@@ -3,11 +3,13 @@
 The SVG converter written in Rust programming language which is ported from Java version of SVG converter.
 [https://github.com/nsclass/ns-svg-converter](https://github.com/nsclass/ns-svg-converter)
 
-# React UI(Frontend)
+# React Framework for UI(Frontend)
 
 Frontend application is made of React framework.
 
 ## Build
+
+The following command will build the distributed version of UI application.
 
 ```
 $ cd react-ui
@@ -16,7 +18,7 @@ $ yarn build
 
 ## Deployment
 
-HTTP server(Backend) is expecting the build output of React application in the following path. `svg-web-service` will looking for the `index.html` file and other static outputs in the `./react-ui/build` directory.
+HTTP server(backend) is expecting the build output of React application in the following path. `svg-web-service` will looking for the `index.html` file and other static outputs in the `./react-ui/build` directory.
 
 ```
 svg-web-service
@@ -51,7 +53,7 @@ svg-web-service
         └── spider.jpg.65dacd47.svg
 ```
 
-# HTTP End Points(Backend)
+# Actix-Web Service(Backend)
 
 This application is exposing the following HTTP end points.
 
