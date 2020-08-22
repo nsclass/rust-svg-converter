@@ -10,7 +10,7 @@ use serde::Deserialize;
 use tracing::{info, instrument};
 use tracing_subscriber::EnvFilter;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct Config {
     pub host: String,
     pub port: i32,
