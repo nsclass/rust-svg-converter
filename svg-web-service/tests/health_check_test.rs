@@ -5,7 +5,12 @@ use svg_web_service::run;
 
 #[actix_rt::test]
 async fn health_check_test() {
-    let conf = spawn_app();
+    let conf = Config {
+        host: "localhost".to_string(),
+        port: 8080
+    };
+
+    spawn_app(conf.clone());
     let client = reqwest::Client::new();
 
     let response = client
@@ -25,8 +30,7 @@ async fn health_check_test() {
 }
 
 // all the things.
-fn spawn_app() -> Config {
-    let (server, conf) = run().expect("Failed to bind address");
+fn spawn_app(conf: Config) {
+    let server = run(conf).expect("Failed to bind address");
     let _ = tokio::spawn(server);
-    conf
 }

@@ -5,11 +5,12 @@
 
 use color_eyre::Result;
 use svg_web_service::run;
+use svg_web_service::config::Config;
 
 #[actix_rt::main]
 async fn main() -> Result<()> {
-    let (server, _) = run()?;
-    let _ = server.await;
+    let conf = Config::from_env()?;
+    let _ = run(conf)?.await;
 
     Ok(())
 }
