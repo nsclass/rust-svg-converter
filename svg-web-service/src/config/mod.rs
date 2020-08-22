@@ -21,7 +21,7 @@ impl Config {
     pub fn from_env() -> Result<Self> {
         dotenv().ok();
 
-        tracing_subscriber::fmt()
+        let _ = tracing_subscriber::fmt()
             .with_env_filter(EnvFilter::from_default_env())
             .try_init();
 
