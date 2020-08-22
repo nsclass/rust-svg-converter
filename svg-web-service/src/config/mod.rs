@@ -23,7 +23,7 @@ impl Config {
 
         tracing_subscriber::fmt()
             .with_env_filter(EnvFilter::from_default_env())
-            .init();
+            .try_init();
 
         info!("loading configuration");
         let mut cfg = config::Config::new();
