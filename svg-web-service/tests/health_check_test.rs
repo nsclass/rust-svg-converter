@@ -1,7 +1,7 @@
 use assert_json_diff::assert_json_include;
 use serde_json::json;
 use svg_web_service::config::Config;
-use svg_web_service::run;
+use svg_web_service::app_run;
 
 #[actix_rt::test]
 async fn health_check_test() {
@@ -31,6 +31,6 @@ async fn health_check_test() {
 
 // all the things.
 fn spawn_app(conf: Config) {
-    let server = run(conf).expect("Failed to bind address");
+    let server = app_run(conf).expect("Failed to bind address");
     let _ = tokio::spawn(server);
 }

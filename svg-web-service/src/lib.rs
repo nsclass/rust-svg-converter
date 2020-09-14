@@ -8,7 +8,7 @@ use color_eyre::Result;
 use tracing::info;
 use web_handler::app_config;
 
-pub fn run(conf: Config) -> Result<Server, std::io::Error> {
+pub fn app_run(conf: Config) -> Result<Server, std::io::Error> {
     info!("starting server at http://{}:{}", conf.host, conf.port);
 
     let server = HttpServer::new(move || App::new().wrap(Logger::default()).configure(app_config))
