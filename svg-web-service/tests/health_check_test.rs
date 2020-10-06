@@ -1,13 +1,13 @@
 use assert_json_diff::assert_json_include;
 use serde_json::json;
-use svg_web_service::config::Config;
 use svg_web_service::app_run;
+use svg_web_service::config::Config;
 
 #[actix_rt::test]
 async fn health_check_test() {
     let conf = Config {
         host: "localhost".to_string(),
-        port: 8080
+        port: 8080,
     };
 
     spawn_app(conf.clone());
