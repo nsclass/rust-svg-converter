@@ -5,11 +5,11 @@
 
 use actix_web::{error, web, Error, HttpRequest, HttpResponse};
 use bytes::BytesMut;
-
 use futures::StreamExt;
 use serde::{Deserialize, Serialize};
-use svg_converter::{svg_converted_str_from_base64_image, OperationProgressListener};
 use tracing::info;
+
+use svg_converter::{svg_converted_str_from_base64_image, OperationProgressListener};
 
 #[derive(Serialize, Deserialize)]
 pub struct SvgConvertRequest {
@@ -41,6 +41,7 @@ impl OperationProgressListener for ProgressListener {
     }
 }
 
+#[tracing::instrument(name = "svg_convert", skip(_req, payload))]
 pub async fn svg_convert(
     _req: HttpRequest,
     mut payload: web::Payload,
