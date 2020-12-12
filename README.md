@@ -19,9 +19,9 @@ $ yarn build
 ## Deployment
 
 HTTP server(backend) is expecting the build output of React application in `svg-web-service/react-ui/build`.
-So we have to copy the `/react-ui/build` directory into `svg-web-service` directory manually.
-`svg-web-service` will looking for the `index.html` file and other static outputs from the `svg-web-service/react-ui/build` directory.
-However we don't need to copy files for building a docker image because Dockefile will handle them.
+So we have to copy the `/react-ui/build` directory into target directory manually for debugging.
+`svg-web-service` will looking for the `index.html` file and other static outputs from the `./react-ui/build` directory.
+However, we don't need to copy files for building a docker image because Dockefile will handle this.
 
 
 ```
