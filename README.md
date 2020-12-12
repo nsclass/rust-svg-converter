@@ -9,7 +9,7 @@ Frontend application is made of React framework.
 
 ## Build
 
-The following command will build the distributed version of UI application.
+The following command will build UI application.
 
 ```
 $ cd react-ui
@@ -18,10 +18,13 @@ $ yarn build
 
 ## Deployment
 
-HTTP server(backend) is expecting the build output of React application in the following path. `svg-web-service` will looking for the `index.html` file and other static outputs in the `./react-ui/build` directory.
+HTTP server(backend) is expecting the build output of React application in `svg-web-service/react-ui/build`.
+So we have to copy the `/react-ui/build` directory into `svg-web-service` directory manually.
+`svg-web-service` will looking for the `index.html` file and other static outputs from the `svg-web-service/react-ui/build` directory.
+However we don't need to copy files for building a docker image because Dockefile will handle them.
+
 
 ```
-svg-web-service
 ./react-ui/build
 ├── asset-manifest.json
 ├── favicon.ico
@@ -55,7 +58,7 @@ svg-web-service
 
 # Actix-Web Service(Backend)
 
-This application is exposing the following HTTP end points.
+This application is exposing the following HTTP REST end points.
 
 ## Health Checking API
 
@@ -92,13 +95,13 @@ https://github.com/nsclass/rust-svg-converter/blob/master/svg-web-service/tests/
 # Docker Deployment
 
 ## Build an Image
-
+The following command will build a docker image.
 ```
 $ docker build -t [image-name:version] .
 ```
 
 ## Run the Image
-
+You can run an application in a docker with the following command.
 ```
 $ docker run -d --rm --name=[name] -p 8080:8080 [image-name]
 ```
