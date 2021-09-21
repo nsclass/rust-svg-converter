@@ -3,7 +3,7 @@ use serde_json::json;
 use svg_web_service::app_run;
 use svg_web_service::config::Config;
 
-#[actix_rt::test]
+#[actix_web::test]
 async fn health_check_test() {
     let conf = Config {
         host: "localhost".to_string(),
