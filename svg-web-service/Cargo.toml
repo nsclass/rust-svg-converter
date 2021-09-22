@@ -5,7 +5,7 @@
 
 [package]
 name = "svg-web-service"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Nam Seob Seo <nsclass@gmail.com>"]
 edition = "2018"
 
@@ -14,7 +14,7 @@ path = "src/lib.rs"
 
 [[bin]]
 path = "src/main.rs"
-name = "app"
+name = "svg-web-service"
 
 [dependencies]
 svg-converter = { path = "../svg-converter" }
