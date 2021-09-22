@@ -3,7 +3,7 @@ use serde_json::json;
 use svg_web_service::app_run;
 use svg_web_service::config::Config;
 
-#[actix_web::test]
+#[actix_rt::test]
 async fn health_check_test() {
     let conf = Config {
         host: "localhost".to_string(),
@@ -32,5 +32,7 @@ async fn health_check_test() {
 // all the things.
 fn spawn_app(conf: Config) {
     let server = app_run(conf).expect("Failed to bind address");
-    let _ = tokio::spawn(server);
+    let _ = actix_web::rt::spawn(async {
+        server.await;
+    });
 }
