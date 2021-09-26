@@ -17,7 +17,6 @@ export const MainView = () => {
             </div>
             <div>
               <h5>(Supported image types are PNG and JFG)</h5>
-              <h5>(Max supported image size is 2MB due to available memory in Heroku)</h5>
             </div>
             <ImageDropZone />
             <SVGConverter imageFilename={filename} imageData={fileContent} />

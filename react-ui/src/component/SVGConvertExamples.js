@@ -7,18 +7,18 @@ import spiderSVG from "../assets/images/samples/spider.jpg.svg"
 const SVGSample = ({ imageName, originalImage, convertedSvg }) => {
   return (
     <div className="row pb-5 col-lg-12 text-center">
-      <div className="col-md-2 col-sm-2"></div>
+      <div className="col-md-2 col-sm-2"/>
 
       <div className="col-md-3 col-sm-3 card">
         <img className="card-img-top" src={originalImage} alt="" />
         <div className="card-body">
-          <h5 className="card-title">Orinal image</h5>
+          <h5 className="card-title">Original image</h5>
           <p className="card-text">{imageName}</p>
         </div>
       </div>
 
       <div className="col-md-2 col-sm-2 align-self-center">
-        <i className="fa  fa-arrow-right fa-5x" aria-hidden="true"></i>
+        <i className="fa  fa-arrow-right fa-5x" aria-hidden="true"/>
       </div>
 
       <div className="col-md-3 col-sm-3 card">
@@ -28,7 +28,7 @@ const SVGSample = ({ imageName, originalImage, convertedSvg }) => {
           <p className="card-text">{imageName}</p>
         </div>
       </div>
-      <div className="col-md-2 col-sm-2"></div>
+      <div className="col-md-2 col-sm-2"/>
     </div>
   )
 }

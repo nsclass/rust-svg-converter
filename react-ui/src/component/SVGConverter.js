@@ -52,9 +52,9 @@ const SVGConvertingView = ({ imageFilename, loading, svgData, errorMsg }) => {
 }
 
 export const SVGConverter = ({ imageFilename, imageData }) => {
-  const [loading, updateLoading] = useState(false)
-  const [svgData, updateSVGData] = useState()
-  const [errorMsg, updateErrorMsg] = useState()
+  const [loading, setLoading] = useState(false)
+  const [svgData, setSVGData] = useState()
+  const [errorMsg, setErrorMsg] = useState()
 
   const convertSvg = async () => {
     try {
@@ -64,9 +64,9 @@ export const SVGConverter = ({ imageFilename, imageData }) => {
         number_of_colors: 16,
       }
 
-      updateSVGData(null)
-      updateLoading(true)
-      updateErrorMsg(null)
+      setSVGData(null)
+      setLoading(true)
+      setErrorMsg(null)
 
       let config = {
         headers: {
@@ -76,7 +76,7 @@ export const SVGConverter = ({ imageFilename, imageData }) => {
       }
 
       const { data } = await axios.put("/svg/conversion", requestData, config)
-      updateSVGData(data.svg_string)
+      setSVGData(data.svg_string)
     } catch (error) {
       console.error(error)
 
@@ -86,13 +86,13 @@ export const SVGConverter = ({ imageFilename, imageData }) => {
       }
       const splitRes = message.split(":")
       if (splitRes.length > 1) {
-        updateErrorMsg(splitRes[1])
+        setErrorMsg(splitRes[1])
       } else {
-        updateErrorMsg(message)
+        setErrorMsg(message)
       }
     }
 
-    updateLoading(false)
+    setLoading(false)
   }
 
   if (!imageData) {

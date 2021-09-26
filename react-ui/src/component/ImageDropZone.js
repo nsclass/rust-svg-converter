@@ -4,27 +4,27 @@ import { useDropzone } from "react-dropzone"
 import "../assets/css/dropzone.css"
 
 export const useImageDropZone = () => {
-  const [filename, updateFilename] = useState("")
-  const [fileContent, updateFileContent] = useState()
-  const [errorMessage, updateErrorMessage] = useState()
+  const [filename, setFilename] = useState("")
+  const [fileContent, setFileContent] = useState()
+  const [errorMessage, setErrorMessage] = useState()
 
   const ImageDropZone = () => {
     const loadFile = (file) => {
       try {
-        updateFilename(file.name)
+        setFilename(file.name)
 
         let reader = new FileReader()
         reader.onloadend = (evt) => {
-          if (evt.target.readyState == FileReader.DONE) {
+          if (evt.target.readyState === FileReader.DONE) {
             const content = evt.target.result
-            updateFileContent(content)
+            setFileContent(content)
           }
         }
         reader.readAsDataURL(file)
-        updateErrorMessage(null)
+        setErrorMessage(null)
       } catch (e) {
         console.log(e)
-        updateErrorMessage(JSON.stringify(e, null, 2))
+        setErrorMessage(JSON.stringify(e, null, 2))
       }
     }
 
