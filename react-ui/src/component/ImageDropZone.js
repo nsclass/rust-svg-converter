@@ -3,7 +3,7 @@ import { useDropzone } from "react-dropzone"
 
 import "../assets/css/dropzone.css"
 
-const useImageDropZone = () => {
+export const useImageDropZone = () => {
   const [filename, updateFilename] = useState("")
   const [fileContent, updateFileContent] = useState()
   const [errorMessage, updateErrorMessage] = useState()
@@ -50,4 +50,3 @@ const useImageDropZone = () => {
   return [filename, fileContent, ImageDropZone]
 }
 
-export default useImageDropZone

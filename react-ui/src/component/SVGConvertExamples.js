@@ -33,7 +33,7 @@ const SVGSample = ({ imageName, originalImage, convertedSvg }) => {
   )
 }
 
-const SVGConvertExamples = () => {
+export const SVGConvertExamples = () => {
   return (
     <section className="bg-light" id="portfolio">
       <div className="container">
@@ -50,5 +50,3 @@ const SVGConvertExamples = () => {
     </section>
   )
 }
-
-export default SVGConvertExamples

@@ -1,10 +1,10 @@
 import React from "react"
-import useImageDropZone from "./ImageDropZone"
-import SVGHistory from "./SVGHistory"
-import SVGConvertExamples from "./SVGConvertExamples"
-import SVGConverter from "./SVGConverter"
+import { useImageDropZone } from "./ImageDropZone"
+import { SVGHistory } from "./SVGHistory"
+import { SVGConvertExamples } from "./SVGConvertExamples"
+import { SVGConverter } from "./SVGConverter"
 
-const MainView = () => {
+export const MainView = () => {
   const [filename, fileContent, ImageDropZone] = useImageDropZone()
 
   const SVGConverterView = () => {
@@ -35,5 +35,3 @@ const MainView = () => {
     </div>
   )
 }
-
-export default MainView

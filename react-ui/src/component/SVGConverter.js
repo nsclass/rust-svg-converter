@@ -16,7 +16,7 @@ const SVGConvertingView = ({ imageFilename, loading, svgData, errorMsg }) => {
       <div className="mx-auto">
         <div className="portfolio-caption text-center">
           <h4>Converting an image({imageFilename})...</h4>
-          <i className="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+          <i className="fa fa-refresh fa-spin fa-3x fa-fw"/>
           <span className="sr-only">Loading...</span>
         </div>
       </div>
@@ -51,7 +51,7 @@ const SVGConvertingView = ({ imageFilename, loading, svgData, errorMsg }) => {
   )
 }
 
-const SVGConverter = ({ imageFilename, imageData }) => {
+export const SVGConverter = ({ imageFilename, imageData }) => {
   const [loading, updateLoading] = useState(false)
   const [svgData, updateSVGData] = useState()
   const [errorMsg, updateErrorMsg] = useState()
@@ -125,4 +125,3 @@ const SVGConverter = ({ imageFilename, imageData }) => {
   )
 }
 
-export default SVGConverter

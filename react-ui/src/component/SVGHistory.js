@@ -5,7 +5,7 @@ import image2 from "../assets/images/about/2.jpg"
 import image3 from "../assets/images/about/3.jpg"
 import image4 from "../assets/images/about/4.jpg"
 
-const SVGHistory = () => {
+export const SVGHistory = () => {
   return (
     <section id="about">
       <div className="container">
@@ -106,5 +106,3 @@ const SVGHistory = () => {
     </section>
   )
 }
-
-export default SVGHistory
