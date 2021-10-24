@@ -12,8 +12,12 @@ use web_handler::app_config;
 pub fn app_run(conf: Config) -> Result<Server, std::io::Error> {
     info!("starting server at http://{}:{}", conf.host, conf.port);
 
-    let server = HttpServer::new(move || App::new().wrap(TracingLogger::default()).configure(app_config))
-        .bind(format!("{}:{}", conf.host, conf.port))?
-        .run();
+    let server = HttpServer::new(move || {
+        App::new()
+            .wrap(TracingLogger::default())
+            .configure(app_config)
+    })
+    .bind(format!("{}:{}", conf.host, conf.port))?
+    .run();
     Ok(server)
 }
