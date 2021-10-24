@@ -128,7 +128,7 @@ mod tests {
                 // std::fs::write("/Users/nsclass/tmp/output.svg", svg_string)
                 //     .expect("Unable to write file");
             }
-            Err(err) => assert!(false, format!("failed to generate a svg image: {}", err)),
+            Err(err) => assert!(false, "failed to generate a svg image: {}", err),
         }
     }
 }
