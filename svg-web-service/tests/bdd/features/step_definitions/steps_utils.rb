@@ -78,18 +78,16 @@ def get_bearer_token
 end
 
 def get_content_type(content_type)
-  content_type_value = :json
-
   case content_type
   when 'form'
-    content_type_value = 'application/x-www-form-urlencoded'
+    'application/x-www-form-urlencoded'
   when 'json'
-    content_type_value = :json
+    :json
   when 'text'
-    content_type_value = 'application/text'
+    'application/text'
+  else
+    :json
   end
-
-  content_type_value
 end
 
 def request_http_login(username, password, path)
