@@ -11,7 +11,7 @@ Frontend application is made of React framework.
 
 The following command will build UI application.
 
-```
+```bash
 $ cd react-ui
 $ yarn build
 ```
@@ -58,13 +58,13 @@ However, we don't need to copy files for building a docker image because Dockefi
 
 # Actix-Web Service(Backend)
 
-This application is exposing the following HTTP REST end points.
+This application is providing the following HTTP REST end points.
 
 ## Health Checking API
 
 GET `http://localhost:8080/health`
 
-```
+```bash
 {"status": "UP"}
 ```
 
@@ -78,13 +78,13 @@ IMAGE_DATA should be encoded with base64 as an image media type. The encoded str
 
 - Example File
 
-```
+```bash
 https://github.com/nsclass/rust-svg-converter/blob/master/svg-web-service/tests/bdd/features/samples/image_sample_base64.txt
 ```
 
 - Payload Example
 
-```
+```bash
 {
   "image_file_name" : "image_sample_base64.jpg",
   "number_of_colors" : 16,
@@ -92,16 +92,27 @@ https://github.com/nsclass/rust-svg-converter/blob/master/svg-web-service/tests/
 }
 ```
 
+## Running cucumber BDD tests
+
+This project is integrated with cucumber testing framework.
+
+Before running the following tests, svg-web-service should be launched first and system should have Ruby installed.
+
+```bash
+$ cd svg-web-service/tests/bdd
+$ bundler exec cucumber feature/*.feature
+```
+
 # Docker Deployment
 
 ## Build an Image
 The following command will build a docker image.
-```
+```bash
 $ docker build -t [image-name:version] .
 ```
 
 ## Run the Image
 You can run an application in a docker with the following command.
-```
+```bash
 $ docker run -d --rm --name=[name] -p 8080:8080 [image-name]
 ```
