@@ -95,9 +95,9 @@ end
 def request_http_login(username, password, path)
   host = $config['services']['svg-web-service']['host']
   port = $config['services']['svg-web-service']['port']
-  ssl = $config['services']['svg-web-service']['ssl']
+  secure = $config['services']['svg-web-service']['secure']
 
-  url = if ssl
+  url = if secure
           "https://#{host}:#{port}#{path}"
         else
           "http://#{host}:#{port}#{path}"
@@ -137,9 +137,9 @@ end
 def request_http_save(method, path, content_type, content)
   host = $config['services']['svg-web-service']['host']
   port = $config['services']['svg-web-service']['port']
-  ssl = $config['services']['svg-web-service']['ssl']
+  secure = $config['services']['svg-web-service']['secure']
 
-  url = if ssl
+  url = if secure
           "https://#{host}:#{port}#{path}"
         else
           "http://#{host}:#{port}#{path}"
@@ -216,7 +216,7 @@ end
 def insert_test_user(url, username, password)
   host = $config['services']['svg-web-service']['host']
   port = $config['services']['svg-web-service']['port']
-  ssl = $config['services']['svg-web-service']['ssl']
+  secure = $config['services']['svg-web-service']['secure']
 
   payload = {
     email: username.to_s,
@@ -225,7 +225,7 @@ def insert_test_user(url, username, password)
   }.to_json
 
   begin
-    if ssl
+    if secure
       path = "https://#{host}:#{port}" + url
       response = RestClient::Request.execute(method: :post,
                                              url: path,
