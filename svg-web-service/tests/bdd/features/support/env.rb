@@ -13,7 +13,7 @@ require 'rspec/expectations'
 
 puts RUBY_VERSION
 
-AfterConfiguration do |config|
+InstallPlugin do |configuration, registry|
   $config = load_environment('config_bdd.yml')
   wait_for_main_app_start
 end
