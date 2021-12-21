@@ -6,7 +6,7 @@
 [package]
 name = "svg-web-service"
 version = "0.2.0"
-authors = ["Nam Seob Seo <nsclass@gmail.com>"]
+authors = ["Nam Seob Seo"]
 edition = "2018"
 
 [lib]
@@ -19,8 +19,8 @@ name = "svg-web-service"
 [dependencies]
 svg-converter = { path = "../svg-converter" }
 
-actix-web = "4.0.0-beta.10"
-actix-files = "0.6.0-beta.8"
+actix-web = "4.0.0-beta.15"
+actix-files = "0.6.0-beta.10"
 config = "0.11"
 dotenv = "0.15"
 serde = {version = "1", features = ["derive"] }
@@ -35,7 +35,7 @@ tracing-futures = "0.2"
 tracing-log = { version = "0.1", features = ["env_logger"] }
 tracing-subscriber = { version = "0.2", features = ["registry", "env-filter"] }
 tracing-bunyan-formatter = "0.2"
-tracing-actix-web = "0.4.0-beta.15"
+tracing-actix-web = "0.5.0-beta.6"
 
 [dev-dependencies]
 reqwest = { version = "0.11", features = ["json"] }
