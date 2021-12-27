@@ -15,11 +15,11 @@
  */
 
 
- .filler {
+.filler {
     flex: 1 1 auto;
-  }
-  
-  .dropzone {
+}
+
+.dropzone {
     align-items: center;
     outline: 2px dashed black;
     outline-offset: -10px;
@@ -30,21 +30,21 @@
     height: 150px;
     width: 60%;
     margin-left: 20%;
-  }
-  
-  .hover {
+}
+
+.hover {
     background: grey;
     border: dashed 1px darkgrey;
-  }
-  
-  .big {
+}
+
+.big {
     font-size: 96px;
     height: 96px;
     width: 96px;
-  }
-  
-  .dropzone-container {
+}
+
+.dropzone-container {
     padding-top: 50px;
     padding-bottom: 50px;
-  }
+}
   
