@@ -44,7 +44,7 @@ export const SVGConvertExamples = () => {
           </div>
         </div>
         <SVGSample imageName="SVG logo" originalImage={svgLogoPNG} convertedSvg={svgLogoSVG} />
-        <div className="row"></div>
+        <div className="row"/>
         <SVGSample imageName="Spider" originalImage={spiderJPG} convertedSvg={spiderSVG} />
       </div>
     </section>

@@ -1,0 +1,24 @@
+
+/*@property --p {*/
+/*    syntax: "<number>";*/
+/*    inherit: true;*/
+/*    initial-value: 0;*/
+/*}*/
+
+/*@keyframes spotlight {*/
+/*    from { --p : 0 }*/
+/*    to { --p: 1 }*/
+/*}*/
+
+/*.svg-title-background {*/
+/*    --p: 0.3;*/
+/*    --gradient-center-x: calc(var(--p) * 100%);*/
+/*    background: radial-gradient(circle at var(--gradient-center-x) 20%, white, transparent 50vw) hsl(0 0% 47%);*/
+/*}*/
+
+.svg-title {
+    --p: 0.3;
+    color: hsl(0 0% 50%);
+    --text-shadow-x: calc(var(--p) * -1em + (1 - var(--p)) * 1em);
+    text-shadow: var(--text-shadow-x) .3em .2em black;
+}
