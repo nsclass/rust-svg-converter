@@ -8,7 +8,7 @@ use exoquant::{convert_to_indexed, ditherer, optimizer};
 
 pub fn generate_palette_quantization(ctx: SvgConversionCtx) -> Result<SvgConversionCtx, Error> {
     if let Some((image_data, options)) = ctx.into_image_data() {
-        if options.number_of_colors <= 256 {
+        return if options.number_of_colors <= 256 {
             let (palette, indexed_data) = convert_to_indexed(
                 &image_data.pixels,
                 image_data.width,
@@ -37,13 +37,13 @@ pub fn generate_palette_quantization(ctx: SvgConversionCtx) -> Result<SvgConvers
                 }
             }
 
-            return Ok(SvgConversionCtx::ColorQuantization((
+            Ok(SvgConversionCtx::ColorQuantization((
                 palette,
                 indexed_image,
                 options,
-            )));
+            )))
         } else {
-            return Err(Error::NotSupportedNumberOfColorForQuantization);
+            Err(Error::NotSupportedNumberOfColorForQuantization)
         }
     }
     Err(Error::FailureColorQuantization)
