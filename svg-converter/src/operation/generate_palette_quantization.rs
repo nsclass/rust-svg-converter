@@ -44,7 +44,7 @@ pub fn generate_palette_quantization(ctx: SvgConversionCtx) -> Result<SvgConvers
             )))
         } else {
             Err(Error::NotSupportedNumberOfColorForQuantization)
-        }
+        };
     }
     Err(Error::FailureColorQuantization)
 }
