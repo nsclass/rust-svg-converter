@@ -53,10 +53,20 @@ impl Config {
         init_subscriber(subscriber)?;
 
         info!("loading configuration");
-        let mut cfg = config::Config::new();
+        let cfg = config::Config::builder()
+            .add_source(config::Environment::default())
+            .build()?;
 
-        cfg.merge(config::Environment::default())?;
         cfg.try_into()
             .context("loading configuration from environment")
+    }
+}
+
+impl From<config::Config> for Config {
+    fn from(c: config::Config) -> Self {
+        Self {
+            host: c.get_string("HOST").unwrap_or_else(|_|"localhost".to_string()),
+            port: c.get::<i32>("PORT").unwrap_or_else(|_|8080)
+        }
     }
 }
