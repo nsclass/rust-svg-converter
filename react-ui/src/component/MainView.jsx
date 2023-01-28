@@ -1,5 +1,5 @@
 import React from "react"
-import { useImageDropZone } from "./ImageDropZone"
+import { useImageDropZone } from "../hooks/useImageDropZone"
 import { SVGHistory } from "./SVGHistory"
 import { SVGConvertExamples } from "./SVGConvertExamples"
 import { SVGConverter } from "./SVGConverter"
