@@ -68,7 +68,7 @@ export const SVGConverter = ({ imageFilename, imageData }) => {
       setLoading(true)
       setErrorMsg(null)
 
-      let config = {
+      const config = {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -85,7 +85,7 @@ export const SVGConverter = ({ imageFilename, imageData }) => {
         message = error.response.data.message
       }
       const splitRes = message.split(":")
-      if (splitRes.length > 1) {
+      if (splitRes.length >= 1) {
         setErrorMsg(splitRes[1])
       } else {
         setErrorMsg(message)

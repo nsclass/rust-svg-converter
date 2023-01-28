@@ -13,7 +13,7 @@ export const useImageDropZone = () => {
       try {
         setFilename(file.name)
 
-        let reader = new FileReader()
+        const reader = new FileReader()
         reader.onloadend = (evt) => {
           if (evt.target.readyState === FileReader.DONE) {
             const content = evt.target.result
