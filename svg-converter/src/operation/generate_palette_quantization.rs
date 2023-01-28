@@ -20,20 +20,11 @@ pub fn generate_palette_quantization(ctx: SvgConversionCtx) -> Result<SvgConvers
             // TODO: should find a better way instead of copying each cell.
             let height = image_data.height + 2;
             let width = image_data.width + 2;
-            let mut indexed_image = ImageData::new(height, width, vec![0; height * width]);
-            for row in 0..height {
-                indexed_image[row][0] = 0xff;
-                indexed_image[row][width - 1] = 0xff;
-            }
-            for col in 0..width {
-                indexed_image[0][col] = 0xff;
-                indexed_image[height - 1][col] = 0xff;
-            }
-
-            for row in 0..image_data.height {
-                for col in 0..image_data.width {
-                    let data = indexed_data[row * image_data.width + col];
-                    indexed_image[row + 1][col + 1] = data;
+            let mut indexed_image = ImageData::new(height, width, vec![0xff; height * width]);
+            for row in 1..height - 1 {
+                for col in 1..width - 1 {
+                    let data = indexed_data[(row - 1) * image_data.width + col - 1];
+                    indexed_image[row][col] = data;
                 }
             }
 

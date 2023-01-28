@@ -65,8 +65,10 @@ impl Config {
 impl From<config::Config> for Config {
     fn from(c: config::Config) -> Self {
         Self {
-            host: c.get_string("HOST").unwrap_or_else(|_|"localhost".to_string()),
-            port: c.get::<i32>("PORT").unwrap_or_else(|_|8080)
+            host: c
+                .get_string("HOST")
+                .unwrap_or_else(|_| "localhost".to_string()),
+            port: c.get::<i32>("PORT").unwrap_or_else(|_| 8080),
         }
     }
 }
