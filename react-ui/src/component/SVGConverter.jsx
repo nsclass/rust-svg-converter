@@ -93,7 +93,7 @@ export const SVGConverter = ({ imageFilename, imageData }) => {
     }
 
     setLoading(false)
-  }, [imageFilename, imageData, setSVGData, setErrorMsg]);
+  }, [imageFilename, imageData, setSVGData, setErrorMsg, setLoading]);
 
   if (!imageData) {
     return null
