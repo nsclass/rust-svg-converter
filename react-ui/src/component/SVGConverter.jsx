@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, {useCallback, useState} from "react"
 import axios from "axios"
 
 const SVGConvertingView = ({ imageFilename, loading, svgData, errorMsg }) => {
@@ -56,7 +56,7 @@ export const SVGConverter = ({ imageFilename, imageData }) => {
   const [svgData, setSVGData] = useState()
   const [errorMsg, setErrorMsg] = useState()
 
-  const convertSvg = async () => {
+  const convertSvg = useCallback(async () => {
     try {
       const requestData = {
         image_file_name: imageFilename,
@@ -93,7 +93,7 @@ export const SVGConverter = ({ imageFilename, imageData }) => {
     }
 
     setLoading(false)
-  }
+  }, [imageFilename, imageData, setSVGData, setErrorMsg]);
 
   if (!imageData) {
     return null
