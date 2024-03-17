@@ -14,11 +14,19 @@ use crate::{
     generate_palette_quantization, generate_scan_paths, generate_svg_string, image_path_tracing,
     utils::OperationProgressListener,
 };
+use rustc_serialize::base64::{FromBase64, ToBase64, MIME};
+
+pub fn from_base64(base64: String) -> Vec<u8> {
+    let offset = base64.find(',').unwrap_or(base64.len()) + 1;
+    let mut value = base64;
+    value.drain(..offset);
+    return value.from_base64().unwrap();
+}
 
 fn create_image_data(ctx: SvgConversionCtx) -> Result<(ImageData, ImageConvertOptions), Error> {
     match ctx {
         SvgConversionCtx::Base64Image((base64, options)) => {
-            let image_raw_data = image_base64::from_base64(base64);
+            let image_raw_data = from_base64(base64);
 
             let res = image::load_from_memory(&image_raw_data);
             match res {
