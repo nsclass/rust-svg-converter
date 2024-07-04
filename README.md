@@ -24,6 +24,7 @@ So we have to copy the `/react-ui/build` directory into target directory manuall
 However, we don't need to copy files for building a docker image because Dockefile will handle this.
 
 
+
 ```
 ./react-ui/build
 ├── asset-manifest.json

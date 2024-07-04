@@ -2,7 +2,7 @@ import React from "react"
 
 export const MainNavBar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark fixed-top navbar-shrink" id="mainNav">
+    <nav className="navbar navbar-expand-lg navbar-dark fixed-top navbar-shrink" id="mainNav" data-testid="mainNav">
       <div className="container">
         <a className="navbar-brand js-scroll-trigger" href="#page-top">
           SVG Converter
@@ -37,3 +37,4 @@ export const MainNavBar = () => {
     </nav>
   )
 }
+

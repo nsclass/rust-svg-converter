@@ -1,10 +1,17 @@
-import React, {useCallback, useState} from "react"
+import React, { useCallback, useState } from "react"
 import axios from "axios"
 
-const SVGConvertingView = ({ imageFilename, loading, svgData, errorMsg }) => {
+type Props = {
+  imageFilename: string;
+  loading: boolean;
+  svgData?: string;
+  errorMsg?: string;
+}
+
+const SVGConvertingView = ({ imageFilename, loading, svgData, errorMsg }: Props) => {
   const downloadSvgFile = () => {
     const element = document.createElement("a")
-    const file = new Blob([svgData], { type: "text/plain" })
+    const file = new Blob([svgData || ""], { type: "text/plain" })
     element.href = URL.createObjectURL(file)
     element.download = `${imageFilename}.svg`
     document.body.appendChild(element) // Required for this to work in FireFox
@@ -16,7 +23,7 @@ const SVGConvertingView = ({ imageFilename, loading, svgData, errorMsg }) => {
       <div className="mx-auto">
         <div className="portfolio-caption text-center">
           <h4>Converting an image({imageFilename})...</h4>
-          <i className="fa fa-refresh fa-spin fa-3x fa-fw"/>
+          <i className="fa fa-refresh fa-spin fa-3x fa-fw" />
           <span className="sr-only">Loading...</span>
         </div>
       </div>
@@ -35,12 +42,14 @@ const SVGConvertingView = ({ imageFilename, loading, svgData, errorMsg }) => {
     return null
   }
 
-  const convertSvgToBase64ImgString = (SVG) =>
-    `data:image/svg+xml;base64,${Buffer.from(SVG).toString("base64")}`
+  const convertSvgToBase64ImgString = (SVG: string) => {
+    const base64 = btoa(SVG);
+    return `data:image/svg+xml;base64,${base64}`
+  }
 
   return (
     <div className="mx-auto">
-      <img className="img-fluid" src={convertSvgToBase64ImgString(svgData)} />
+      <img alt='converting svg' src={convertSvgToBase64ImgString(svgData)} />
       <div className="portfolio-caption">
         <h4>Converted SVG image</h4>
         <button className="btn btn-success" onClick={(e) => downloadSvgFile()}>
@@ -51,10 +60,15 @@ const SVGConvertingView = ({ imageFilename, loading, svgData, errorMsg }) => {
   )
 }
 
-export const SVGConverter = ({ imageFilename, imageData }) => {
+type SvgProps = {
+  imageFilename: string;
+  imageData: string;
+}
+
+export const SVGConverter = ({ imageFilename, imageData }: SvgProps) => {
   const [loading, setLoading] = useState(false)
-  const [svgData, setSVGData] = useState()
-  const [errorMsg, setErrorMsg] = useState()
+  const [svgData, setSVGData] = useState<string>()
+  const [errorMsg, setErrorMsg] = useState<string>()
 
   const convertSvg = useCallback(async () => {
     try {
@@ -64,9 +78,9 @@ export const SVGConverter = ({ imageFilename, imageData }) => {
         number_of_colors: 16,
       }
 
-      setSVGData(null)
+      setSVGData(undefined)
       setLoading(true)
-      setErrorMsg(null)
+      setErrorMsg(undefined)
 
       const config = {
         headers: {
@@ -77,7 +91,7 @@ export const SVGConverter = ({ imageFilename, imageData }) => {
 
       const { data } = await axios.put("/svg/conversion", requestData, config)
       setSVGData(data.svg_string)
-    } catch (error) {
+    } catch (error: any) {
       console.error(error)
 
       let message = error.message
@@ -85,7 +99,7 @@ export const SVGConverter = ({ imageFilename, imageData }) => {
         message = error.response.data.message
       }
       const splitRes = message.split(":")
-      if (splitRes.length >= 1) {
+      if (splitRes.length > 1) {
         setErrorMsg(splitRes[1])
       } else {
         setErrorMsg(message)
@@ -93,7 +107,7 @@ export const SVGConverter = ({ imageFilename, imageData }) => {
     }
 
     setLoading(false)
-  }, [imageFilename, imageData, setSVGData, setErrorMsg, setLoading]);
+  }, [imageFilename, imageData, setSVGData, setErrorMsg, setLoading])
 
   if (!imageData) {
     return null
@@ -103,7 +117,7 @@ export const SVGConverter = ({ imageFilename, imageData }) => {
     <>
       <div className="row col-lg-12 text-center">
         <div className="mx-auto">
-          <img className="img-fluid" src={imageData} />
+          <img alt='portfolio' className="img-fluid" src={imageData} />
           <div className="portfolio-caption">
             <h4>Original image</h4>
             <button className="btn btn-success" onClick={(e) => convertSvg()}>

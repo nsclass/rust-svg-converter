@@ -1,37 +1,37 @@
-import React, { useState, useCallback } from "react"
-import { useDropzone } from "react-dropzone"
+import React, { useCallback, useState} from "react"
+import {useDropzone} from "react-dropzone"
 
 import "../assets/css/dropzone.css"
 
-export const useImageDropZone = () => {
+export const useImageDropZone = (): [string, string, React.FC<{}>] => {
   const [filename, setFilename] = useState("")
-  const [fileContent, setFileContent] = useState()
-  const [errorMessage, setErrorMessage] = useState()
+  const [fileContent, setFileContent] = useState("")
+  const [, setErrorMessage] = useState<string>()
 
   const ImageDropZone = () => {
-    const loadFile = (file) => {
+    const loadFile = (file: File) => {
       try {
         setFilename(file.name)
 
         const reader = new FileReader()
         reader.onloadend = (evt) => {
-          if (evt.target.readyState === FileReader.DONE) {
-            const content = evt.target.result
+          if (evt?.target?.readyState === FileReader.DONE) {
+            const content = evt.target.result as string
             setFileContent(content)
           }
         }
         reader.readAsDataURL(file)
-        setErrorMessage(null)
+        setErrorMessage("")
       } catch (e) {
         console.log(e)
         setErrorMessage(JSON.stringify(e, null, 2))
       }
     }
 
-    const onDrop = useCallback((acceptedFiles) => {
+    const onDrop = useCallback((acceptedFiles: File[]) => {
       loadFile(acceptedFiles[0])
     }, [])
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
     return (
       <div className="dropzone-container">

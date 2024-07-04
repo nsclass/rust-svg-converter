@@ -26,7 +26,7 @@ export const SVGHistory = () => {
             <ul className="timeline">
               <li>
                 <div className="timeline-image">
-                  <img className="rounded-circle img-fluid" src={image1} alt="" />
+                  <img className="rounded-circle img-fluid" src={image1} alt=""/>
                 </div>
                 <div className="timeline-panel">
                   <div className="timeline-heading">
@@ -42,7 +42,7 @@ export const SVGHistory = () => {
               </li>
               <li className="timeline-inverted">
                 <div className="timeline-image">
-                  <img className="rounded-circle img-fluid" src={image2} alt="" />
+                  <img className="rounded-circle img-fluid" src={image2} alt=""/>
                 </div>
                 <div className="timeline-panel">
                   <div className="timeline-heading">
@@ -53,7 +53,8 @@ export const SVGHistory = () => {
                     <p className="text-muted">
                       SVG 1.1 became a W3C Recommendation on 14 January 2003. The SVG 1.1
                       specification is modularized in order to allow subsets to be defined as
-                      profiles. Apart from this, there is very little difference between SVG 1.1 and
+                      profiles. Apart from this, there is very little difference between SVG 1.1
+                      and
                       SVG 1.0.
                     </p>
                   </div>
@@ -61,7 +62,7 @@ export const SVGHistory = () => {
               </li>
               <li>
                 <div className="timeline-image">
-                  <img className="rounded-circle img-fluid" src={image3} alt="" />
+                  <img className="rounded-circle img-fluid" src={image3} alt=""/>
                 </div>
                 <div className="timeline-panel">
                   <div className="timeline-heading">
@@ -70,8 +71,10 @@ export const SVGHistory = () => {
                   </div>
                   <div className="timeline-body">
                     <p className="text-muted">
-                      SVG Tiny 1.2 became a W3C Recommendation on 22 December 2008. It was initially
-                      drafted as a profile of the planned SVG Full 1.2 (which has since been dropped
+                      SVG Tiny 1.2 became a W3C Recommendation on 22 December 2008. It was
+                      initially
+                      drafted as a profile of the planned SVG Full 1.2 (which has since been
+                      dropped
                       in favor of SVG 2), but was later refactored as a standalone specification.
                     </p>
                   </div>
@@ -79,7 +82,7 @@ export const SVGHistory = () => {
               </li>
               <li className="timeline-inverted">
                 <div className="timeline-image">
-                  <img className="rounded-circle img-fluid" src={image4} alt="" />
+                  <img className="rounded-circle img-fluid" src={image4} alt=""/>
                 </div>
                 <div className="timeline-panel">
                   <div className="timeline-heading">
@@ -88,7 +91,8 @@ export const SVGHistory = () => {
                   </div>
                   <div className="timeline-body">
                     <p className="text-muted">
-                      SVG 1.1 Second Edition, which includes all the errata and clarifications, but
+                      SVG 1.1 Second Edition, which includes all the errata and clarifications,
+                      but
                       no new features to the original SVG 1.1 was released on 16 August 2011.
                     </p>
                   </div>
