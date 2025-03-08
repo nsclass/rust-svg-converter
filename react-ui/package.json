@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@vitejs/plugin-react-swc": "^3.4.0",
-    "axios": "^0.28.0",
+    "axios": "^1.8.2",
     "http-proxy-middleware": "^2.0.7",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
