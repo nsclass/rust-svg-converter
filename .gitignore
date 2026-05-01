@@ -3,3 +3,8 @@ target
 *.iml
 .idea/
 node_modules/
+# Codev
+.agent-farm/
+.consult/
+codev/.update-hashes.json
+.builders/
