@@ -4,7 +4,7 @@
 // https://opensource.org/licenses/MIT
 
 use color_eyre::Result;
-use dotenv::dotenv;
+use dotenvy::dotenv;
 use eyre::WrapErr;
 use serde::Deserialize;
 use tracing::subscriber::set_global_default;
@@ -64,11 +64,13 @@ impl Config {
 
 impl From<config::Config> for Config {
     fn from(c: config::Config) -> Self {
+        // config 0.15 no longer lowercases keys on lookup (0.14 did),
+        // and the Environment source stores them lowercased.
         Self {
             host: c
-                .get_string("HOST")
+                .get_string("host")
                 .unwrap_or_else(|_| "localhost".to_string()),
-            port: c.get::<i32>("PORT").unwrap_or_else(|_| 8080),
+            port: c.get::<i32>("port").unwrap_or(8080),
         }
     }
 }

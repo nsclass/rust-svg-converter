@@ -14,13 +14,12 @@ use crate::{
     generate_palette_quantization, generate_scan_paths, generate_svg_string, image_path_tracing,
     utils::OperationProgressListener,
 };
-use rustc_serialize::base64::{FromBase64, ToBase64, MIME};
+use base64::engine::general_purpose::STANDARD;
+use base64::Engine as _;
 
 pub fn from_base64(base64: String) -> Vec<u8> {
-    let offset = base64.find(',').unwrap_or(base64.len()) + 1;
-    let mut value = base64;
-    value.drain(..offset);
-    return value.from_base64().unwrap();
+    let offset = base64.find(',').map(|i| i + 1).unwrap_or(0);
+    STANDARD.decode(&base64[offset..]).unwrap()
 }
 
 fn create_image_data(ctx: SvgConversionCtx) -> Result<(ImageData, ImageConvertOptions), Error> {
